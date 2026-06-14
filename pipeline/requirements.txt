@@ -1,4 +1,4 @@
 boto3
 requests
 rich
-gitpython
+PyYAML

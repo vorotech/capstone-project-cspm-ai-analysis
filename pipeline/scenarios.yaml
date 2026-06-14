@@ -10,6 +10,7 @@ scenarios:
 
   - name: test_s3_red
     type: red
+    architecture_context_file: "docs/diagrams/aws-multi-tier-architecture.drawio"
     prowler_scope:
       - s3
     rules:

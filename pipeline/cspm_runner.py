@@ -1,13 +1,15 @@
 import os
 import yaml
 import subprocess
+import shutil
 from rich.console import Console
 
 console = Console()
 
 class CSPMRunner:
     """
-    Executes CSPM tools (Cloud Custodian, Prowler) against deployed infrastructure.
+    Executes CSPM tools (Prowler, Security Hub) against deployed infrastructure.
+    It reads `scenarios.yaml` to determine what needs to be run.
     """
     def __init__(self, scenarios_file: str, base_path: str = "../data/ecc-aws-rulepack"):
         self.scenarios_file = scenarios_file
@@ -38,42 +40,6 @@ class CSPMRunner:
         console.print(f"[red]Error: Scenario '{scenario_name}' not found in {self.scenarios_file}[/red]")
         return {}
 
-    def run_custodian(self, scenario_name: str, profile: str = "auditor", region: str = "us-east-1"):
-        """Runs Cloud Custodian for the specified scenario."""
-        config = self._get_scenario_config(scenario_name)
-        rules = config.get("rules", [])
-        if not rules:
-            console.print("[yellow]No rules found for this scenario to run Cloud Custodian against.[/yellow]")
-            return
-
-        scenario_output_dir = os.path.join(self.output_dir, "c7n", scenario_name)
-        os.makedirs(scenario_output_dir, exist_ok=True)
-
-        for rule in rules:
-            policy_path = os.path.join(self.base_path, "policies", f"{rule}.yml")
-            
-            if not os.path.exists(policy_path):
-                console.print(f"[yellow]Warning: Custodian policy not found: {policy_path}[/yellow]")
-                continue
-
-            console.print(f"\n[bold magenta]--- Running Cloud Custodian for {rule} ---[/bold magenta]")
-            cmd = [
-                "custodian", "run",
-                "--cache-period=0",
-                "-c", policy_path,
-                "-s", scenario_output_dir,
-                "--profile", profile,
-                "--region", region
-            ]
-            
-            console.print(f"[cyan]Command: {' '.join(cmd)}[/cyan]")
-            try:
-                subprocess.run(cmd, check=True, capture_output=True, text=True)
-                console.print(f"[green]Success: Custodian finished for {rule}. Output in {scenario_output_dir}[/green]")
-            except subprocess.CalledProcessError as e:
-                console.print(f"[red]Error executing Custodian for {rule}:[/red]")
-                console.print(e.stderr)
-
     def run_prowler(self, scenario_name: str, profile: str = "auditor", region: str = "us-east-1"):
         """Runs Prowler limited to the services defined in the scenario's prowler_scope and NIST compliance."""
         config = self._get_scenario_config(scenario_name)
@@ -84,6 +50,10 @@ class CSPMRunner:
             return
             
         scenario_output_dir = os.path.join(self.output_dir, "prowler", scenario_name)
+        
+        # Clean up previous Prowler runs to prevent file accumulation
+        if os.path.exists(scenario_output_dir):
+            shutil.rmtree(scenario_output_dir)
         os.makedirs(scenario_output_dir, exist_ok=True)
 
         console.print(f"\n[bold magenta]--- Running Prowler for scope: {', '.join(scope)} (NIST 800-53 Rev 5) ---[/bold magenta]")
@@ -135,6 +105,9 @@ class CSPMRunner:
         os.makedirs(scenario_output_dir, exist_ok=True)
         output_file = os.path.join(scenario_output_dir, "findings.json")
 
+        config = self._get_scenario_config(scenario_name)
+        scope = config.get("prowler_scope", [])
+        
         try:
             import boto3
             import json
@@ -154,7 +127,22 @@ class CSPMRunner:
             )
             
             for page in page_iterator:
-                findings.extend(page.get('Findings', []))
+                for finding in page.get('Findings', []):
+                    if scope:
+                        resource_types = [res.get('Type', '').lower() for res in finding.get('Resources', [])]
+                        matched = False
+                        for rtype in resource_types:
+                            # rtype is e.g. "awss3bucket"
+                            for svc in scope:
+                                if f"aws{svc}" in rtype.replace("::", "") or svc in rtype:
+                                    matched = True
+                                    break
+                            if matched: break
+                        
+                        if not matched:
+                            continue
+                            
+                    findings.append(finding)
                 
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(findings, f, indent=2, default=str)
@@ -166,7 +154,6 @@ class CSPMRunner:
 
     def run_all(self, scenario_name: str):
         """Runs all configured CSPM tools."""
-        self.run_custodian(scenario_name)
         self.run_prowler(scenario_name)
         self.run_securityhub(scenario_name)
 

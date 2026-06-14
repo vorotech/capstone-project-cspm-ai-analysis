@@ -40,12 +40,8 @@ git clone https://github.com/epam/ecc-aws-rulepack.git data/ecc-aws-rulepack
    pipx install --python $(brew --prefix python@3.12)/bin/python3.12 prowler
    ```
 
-3. **Cloud Custodian**:
-   ```bash
-   pipx install c7n
-   ```
 
-4. **AWS Security Hub**: Повинен бути активований в цільовому AWS акаунті.
+3. **AWS Security Hub**: Повинен бути активований в цільовому AWS акаунті.
    - Для цілей цього дослідження необхідно обов'язково увімкнути стандарт безпеки **NIST Special Publication 800-53 Revision 5**.
    - Перейдіть за посиланням: [Security Hub Standards (us-east-1)](https://us-east-1.console.aws.amazon.com/securityhub/home?region=us-east-1#/standards)
    - Знайдіть на сторінці **NIST Special Publication 800-53 Revision 5** та натисніть кнопку **Enable Standard**.

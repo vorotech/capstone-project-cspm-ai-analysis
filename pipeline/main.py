@@ -23,10 +23,18 @@ def run_cspm(args):
     runner = CSPMRunner(scenarios_file=args.scenarios_file, base_path=args.base_path)
     runner.run_all(args.scenario)
 
+from llm_analyzer import LLMAnalyzer
+
 def run_analyze(args):
     """Executes the LLM analysis phase."""
     console.print(f"\n[bold yellow]--- Running LLM Analysis for Scenario: {args.scenario} ---[/bold yellow]")
-    console.print("[cyan]TODO: Implementation of OpenRouter/LLM analysis goes here.[/cyan]")
+    if not args.models:
+        console.print("[red]Error: You must provide at least one model via --models (e.g. --models local/gemma-4-12b,anthropic/claude-3-haiku) for analyze command.[/red]")
+        sys.exit(1)
+        
+    analyzer = LLMAnalyzer()
+    models_list = [m.strip() for m in args.models.split(",")]
+    analyzer.run_analysis(args.scenario, models_list)
 
 def run_destroy(args):
     """Executes the Terraform destroy phase."""
@@ -73,11 +81,12 @@ def main():
     parser_apply.set_defaults(func=run_apply)
     
     # Subcommand: cspm
-    parser_cspm = subparsers.add_parser("cspm", parents=[parent_parser], help="Run CSPM tools (Prowler, Custodian)")
+    parser_cspm = subparsers.add_parser("cspm", parents=[parent_parser], help="Run CSPM tools (Prowler, Security Hub)")
     parser_cspm.set_defaults(func=run_cspm)
     
     # Subcommand: analyze
     parser_analyze = subparsers.add_parser("analyze", parents=[parent_parser], help="Run LLM analysis on CSPM results")
+    parser_analyze.add_argument("--models", help="Comma separated list of models, e.g. local/gemma-4-12b,anthropic/claude-3-haiku")
     parser_analyze.set_defaults(func=run_analyze)
     
     # Subcommand: destroy

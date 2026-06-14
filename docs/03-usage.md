@@ -40,7 +40,7 @@ python main.py apply --scenario test_s3_red
 ```
 
 **2. CSPM Аналіз**
-Запускає Prowler та Cloud Custodian на розгорнутих ресурсах і зберігає логи в JSON/CSV форматах.
+Запускає Prowler та Security Hub на розгорнутих ресурсах і зберігає логи в JSON/CSV форматах.
 ```bash
 python main.py cspm --scenario test_s3_red
 ```

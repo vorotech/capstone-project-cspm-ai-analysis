@@ -5,3 +5,6 @@ output/
 __pycache__/
 *.pyc
 docs/.DS_Store
+
+# Scan outputs
+output/

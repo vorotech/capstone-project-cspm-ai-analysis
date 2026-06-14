@@ -1,6 +1,8 @@
 scenarios:
   - name: test_iam_red
     type: red
+    prowler_scope:
+      - iam
     rules:
       - ecc-aws-001-ensure_mfa_is_enabled_for_all_iam_users_with_console_password
       - ecc-aws-018-iam_users_receive_permissions_only_through_groups
@@ -8,6 +10,8 @@ scenarios:
 
   - name: test_s3_red
     type: red
+    prowler_scope:
+      - s3
     rules:
       - ecc-aws-004-bucket_policy_allows_https_requests
       - ecc-aws-042-s3_encrypted_using_kms
@@ -15,12 +19,16 @@ scenarios:
 
   - name: test_s3_green
     type: green
+    prowler_scope:
+      - s3
     rules:
       - ecc-aws-004-bucket_policy_allows_https_requests
       - ecc-aws-042-s3_encrypted_using_kms
 
   - name: test_ec2_red
     type: red
+    prowler_scope:
+      - ec2
     rules:
       - ecc-aws-020-instance_without_any_tag
       - ecc-aws-025-instance_without_termination_protection
@@ -28,6 +36,8 @@ scenarios:
 
   - name: test_rds_red
     type: red
+    prowler_scope:
+      - rds
     rules:
       - ecc-aws-005-rds_not_open_to_large_scope
       - ecc-aws-026-rds_instance_with_no_backups

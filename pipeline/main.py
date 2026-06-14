@@ -8,6 +8,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from terraform_runner import TerraformRunner
 
+from cspm_runner import CSPMRunner
+
 console = Console()
 
 def run_apply(args):
@@ -18,7 +20,8 @@ def run_apply(args):
 def run_cspm(args):
     """Executes the CSPM scanning phase."""
     console.print(f"\n[bold yellow]--- Running CSPM Tools for Scenario: {args.scenario} ---[/bold yellow]")
-    console.print("[cyan]TODO: Implementation of Prowler and Cloud Custodian scans goes here.[/cyan]")
+    runner = CSPMRunner(scenarios_file=args.scenarios_file, base_path=args.base_path)
+    runner.run_all(args.scenario)
 
 def run_analyze(args):
     """Executes the LLM analysis phase."""

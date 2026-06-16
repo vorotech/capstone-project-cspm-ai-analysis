@@ -1,0 +1,39 @@
+scenarios:
+  - name: test_iam_red
+    service_scope:
+      - iam
+    tasks:
+      - data/terraform/ecc-aws-001-ensure_mfa_is_enabled_for_all_iam_users_with_console_password/red
+      - data/terraform/ecc-aws-018-iam_users_receive_permissions_only_through_groups/red
+      - data/terraform/ecc-aws-019-iam_password_policy_password_reuse/red
+
+  - name: test_s3_red
+    architecture_context_file: "docs/diagrams/aws-multi-tier-architecture.md"
+    service_scope: ['s3', 'ec2']
+    tasks:
+      - data/terraform/ecc-aws-004-bucket_policy_allows_https_requests/red
+      - data/terraform/ecc-aws-042-s3_encrypted_using_kms/red
+      - data/terraform/ecc-aws-043-s3_bucket_lifecycle/red
+
+  - name: test_s3_green
+    service_scope:
+      - s3
+    tasks:
+      - data/terraform/ecc-aws-004-bucket_policy_allows_https_requests/green
+      - data/terraform/ecc-aws-042-s3_encrypted_using_kms/green
+
+  - name: test_ec2_red
+    service_scope:
+      - ec2
+    tasks:
+      - data/terraform/ecc-aws-020-instance_without_any_tag/red
+      - data/terraform/ecc-aws-025-instance_without_termination_protection/red
+      - data/terraform/ecc-aws-186-ec2_instance_no_public_ip/red
+
+  - name: test_rds_red
+    service_scope:
+      - rds
+    tasks:
+      - data/terraform/ecc-aws-005-rds_not_open_to_large_scope/red
+      - data/terraform/ecc-aws-026-rds_instance_with_no_backups/red
+      - data/terraform/ecc-aws-127-rds_cluster_storage_is_encrypted/red

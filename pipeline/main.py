@@ -1,5 +1,6 @@
 import argparse
 import sys
+import subprocess
 from rich.console import Console
 
 # Adjust path to import local modules
@@ -14,16 +15,27 @@ console = Console()
 
 def run_apply(args):
     """Executes the Terraform apply phase."""
-    runner = TerraformRunner(scenarios_file=args.scenarios_file, base_path=args.base_path)
+    runner = TerraformRunner(scenarios_file=args.scenarios_file)
     runner.apply(args.scenario)
 
 def run_cspm(args):
     """Executes the CSPM scanning phase."""
     console.print(f"\n[bold yellow]--- Running CSPM Tools for Scenario: {args.scenario} ---[/bold yellow]")
-    runner = CSPMRunner(scenarios_file=args.scenarios_file, base_path=args.base_path)
+    runner = CSPMRunner(scenarios_file=args.scenarios_file)
     runner.run_all(args.scenario)
 
 from llm_analyzer import LLMAnalyzer
+
+def run_report(args=None):
+    """Generates the HTML report from the Jupyter Notebook."""
+    console.print("\n[bold yellow]--- Generating HTML Report ---[/bold yellow]")
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    notebook_path = os.path.join(base_dir, "analysis", "results_analysis.ipynb")
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "html", "--execute", notebook_path], check=True, cwd=base_dir)
+        console.print("[bold green]Success: Report generated at analysis/results_analysis.html[/bold green]")
+    except Exception as e:
+        console.print(f"[bold red]Error generating report:[/bold red] {e}")
 
 def run_analyze(args):
     """Executes the LLM analysis phase."""
@@ -32,13 +44,16 @@ def run_analyze(args):
         console.print("[red]Error: You must provide at least one model via --models (e.g. --models local/gemma-4-12b,anthropic/claude-3-haiku) for analyze command.[/red]")
         sys.exit(1)
         
-    analyzer = LLMAnalyzer()
+    analyzer = LLMAnalyzer(scenarios_file=args.scenarios_file)
     models_list = [m.strip() for m in args.models.split(",")]
     analyzer.run_analysis(args.scenario, models_list)
+    
+    # Automatically generate report after analysis
+    run_report()
 
 def run_destroy(args):
     """Executes the Terraform destroy phase."""
-    runner = TerraformRunner(scenarios_file=args.scenarios_file, base_path=args.base_path)
+    runner = TerraformRunner(scenarios_file=args.scenarios_file)
     runner.destroy(args.scenario)
 
 def run_all(args):
@@ -60,42 +75,44 @@ def main():
     # Global arguments
     parser.add_argument(
         "--scenarios-file", 
-        default="scenarios.yaml", 
+        default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scenarios.yaml"), 
         help="Path to scenarios.yaml configuration file"
     )
-    parser.add_argument(
-        "--base-path", 
-        default="../data/ecc-aws-rulepack", 
-        help="Path to cloned ecc-aws-rulepack directory"
-    )
-    
+   
     # Create subcommands
     subparsers = parser.add_subparsers(dest="command", required=True, help="Pipeline stage to execute")
     
     # Common arguments for subcommands
     parent_parser = argparse.ArgumentParser(add_help=False)
-    parent_parser.add_argument("--scenario", required=True, help="Name of the scenario to run (e.g. test_s3_red)")
+    
+    # Subcommands that require scenario
+    scenario_parser = argparse.ArgumentParser(add_help=False)
+    scenario_parser.add_argument("--scenario", required=True, help="Name of the scenario to run (e.g. test_s3_red)")
     
     # Subcommand: apply
-    parser_apply = subparsers.add_parser("apply", parents=[parent_parser], help="Deploy Terraform infrastructure")
+    parser_apply = subparsers.add_parser("apply", parents=[parent_parser, scenario_parser], help="Deploy Terraform infrastructure")
     parser_apply.set_defaults(func=run_apply)
     
     # Subcommand: cspm
-    parser_cspm = subparsers.add_parser("cspm", parents=[parent_parser], help="Run CSPM tools (Prowler, Security Hub)")
+    parser_cspm = subparsers.add_parser("cspm", parents=[parent_parser, scenario_parser], help="Run CSPM tools (Prowler, Security Hub)")
     parser_cspm.set_defaults(func=run_cspm)
     
     # Subcommand: analyze
-    parser_analyze = subparsers.add_parser("analyze", parents=[parent_parser], help="Run LLM analysis on CSPM results")
+    parser_analyze = subparsers.add_parser("analyze", parents=[parent_parser, scenario_parser], help="Run LLM analysis on CSPM results")
     parser_analyze.add_argument("--models", help="Comma separated list of models, e.g. local/gemma-4-12b,anthropic/claude-3-haiku")
     parser_analyze.set_defaults(func=run_analyze)
     
     # Subcommand: destroy
-    parser_destroy = subparsers.add_parser("destroy", parents=[parent_parser], help="Destroy deployed Terraform infrastructure")
+    parser_destroy = subparsers.add_parser("destroy", parents=[parent_parser, scenario_parser], help="Destroy deployed Terraform infrastructure")
     parser_destroy.set_defaults(func=run_destroy)
     
     # Subcommand: run-all
-    parser_run_all = subparsers.add_parser("run-all", parents=[parent_parser], help="Run full pipeline: apply -> cspm -> analyze -> destroy")
+    parser_run_all = subparsers.add_parser("run-all", parents=[parent_parser, scenario_parser], help="Run full pipeline: apply -> cspm -> analyze -> destroy")
     parser_run_all.set_defaults(func=run_all)
+    
+    # Subcommand: report
+    parser_report = subparsers.add_parser("report", parents=[parent_parser], help="Generate HTML report from Jupyter Notebook")
+    parser_report.set_defaults(func=run_report)
     
     args = parser.parse_args()
     

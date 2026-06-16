@@ -4,12 +4,31 @@ import glob
 from typing import List, Dict, Any
 
 class CSPMParser:
-    def __init__(self, output_base_dir: str = None):
+    def __init__(self, output_base_dir: str = None, scenarios_file: str = None):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
         if output_base_dir is None:
-            current_dir = os.path.dirname(os.path.abspath(__file__))
             self.output_base_dir = os.path.join(current_dir, "..", "output")
         else:
             self.output_base_dir = output_base_dir
+            
+        if scenarios_file is None:
+            self.scenarios_file = os.path.join(current_dir, "..", "scenarios.yaml")
+        else:
+            self.scenarios_file = scenarios_file
+
+    def _get_scenario_config(self, scenario_name: str) -> dict:
+        import yaml
+        if not os.path.exists(self.scenarios_file):
+            return {}
+        with open(self.scenarios_file, 'r', encoding='utf-8') as f:
+            try:
+                data = yaml.safe_load(f)
+            except Exception:
+                return {}
+        for s in data.get("scenarios", []):
+            if s.get("name") == scenario_name:
+                return s
+        return {}
 
     def parse_all(self, scenario_name: str) -> List[Dict[str, Any]]:
         """Parses outputs from all CSPM tools for a given scenario and normalizes them."""
@@ -53,6 +72,9 @@ class CSPMParser:
         if not os.path.exists(prowler_dir):
             return findings
 
+        config = self._get_scenario_config(scenario_name)
+        scope = config.get("service_scope", [])
+
         # Prowler outputs multiple formats. We look for .ocsf.json
         ocsf_files = glob.glob(os.path.join(prowler_dir, "*.ocsf.json"))
         for file in ocsf_files:
@@ -73,10 +95,22 @@ class CSPMParser:
                                     nist_controls.append(self._normalize_prowler_control(c))
 
                         res_id = "unknown"
+                        res_type = ""
                         if item.get("resources"):
                             res_id = item["resources"][0].get("uid", "unknown")
+                            res_type = item["resources"][0].get("type", "").lower()
                         elif item.get("finding_info") and item["finding_info"].get("uid"):
                             res_id = item["finding_info"]["uid"]
+                            
+                        if scope:
+                            matched = False
+                            res_id_lower = res_id.lower()
+                            for svc in scope:
+                                if f":{svc}:" in res_id_lower or svc in res_type:
+                                    matched = True
+                                    break
+                            if not matched:
+                                continue
                         
                         finding = {
                             "tool": "prowler",

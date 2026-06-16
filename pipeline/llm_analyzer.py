@@ -13,15 +13,17 @@ from llm_client import LLMClient
 console = Console()
 
 class LLMAnalyzer:
-    def __init__(self, base_path: str = None):
-        if base_path is None:
-            self.base_path = os.path.dirname(os.path.abspath(__file__))
+    """
+    Coordinates the LLM analysis process: parsing CSPM results and prompting the LLM.
+    """
+    def __init__(self, scenarios_file: str = None):
+        if scenarios_file is None:
+            self.scenarios_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scenarios.yaml")
         else:
-            self.base_path = base_path
+            self.scenarios_file = scenarios_file
             
-        self.scenarios_file = os.path.join(self.base_path, "scenarios.yaml")
-        self.prompts_dir = os.path.join(self.base_path, "prompts")
-        self.output_dir = os.path.join(self.base_path, "..", "output", "analysis")
+        self.prompts_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "prompts")
+        self.output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output", "analysis")
         
         # Ensure output directory exists for CSV files
         os.makedirs(self.output_dir, exist_ok=True)
@@ -34,7 +36,8 @@ class LLMAnalyzer:
         metrics_headers = [
             "run_id", "timestamp", "scenario", "model", "cspm_tool", "parsing_success",
             "total_unique_nist_controls_failed", "nist_controls_adjusted",
-            "adjustment_rate_percentage", "prompt_tokens", "completion_tokens", "latency_seconds"
+            "adjustment_rate_percentage", "prompt_tokens", "completion_tokens", "latency_seconds",
+            "error_type"
         ]
         if not os.path.exists(self.metrics_csv_path):
             with open(self.metrics_csv_path, 'w', newline='', encoding='utf-8') as f:
@@ -44,7 +47,7 @@ class LLMAnalyzer:
         findings_headers = [
             "run_id", "model", "cspm_tool", "finding_id", "resource_id", "resource_type",
             "associated_nist_controls", "original_severity", "adjusted_severity",
-            "is_false_positive", "adjustment_reason", "justification"
+            "is_false_positive", "adjustment_category", "adjustment_reason", "justification"
         ]
         if not os.path.exists(self.findings_csv_path):
             with open(self.findings_csv_path, 'w', newline='', encoding='utf-8') as f:
@@ -62,13 +65,25 @@ class LLMAnalyzer:
                 return s
         return {}
 
-    def _read_drawio_xml(self, file_path: str) -> str:
-        full_path = os.path.join(self.base_path, "..", file_path)
+    def _read_architecture_context(self, file_path: str) -> tuple[str, str]:
+        """Returns a tuple of (type, content) where type is 'text' or 'image'"""
+        scenario_dir = os.path.dirname(os.path.abspath(self.scenarios_file))
+        full_path = os.path.join(scenario_dir, file_path)
         if not os.path.exists(full_path):
-            console.print(f"[yellow]Warning: Architecture drawio file not found at {full_path}[/yellow]")
-            return "No architecture diagram provided."
-        with open(full_path, 'r', encoding='utf-8') as f:
-            return f.read()
+            console.print(f"[yellow]Warning: Architecture file not found at {full_path}[/yellow]")
+            return "text", "No architecture diagram provided."
+            
+        ext = os.path.splitext(full_path)[1].lower()
+        if ext in ['.png', '.jpg', '.jpeg']:
+            import base64
+            with open(full_path, 'rb') as f:
+                b64_str = base64.b64encode(f.read()).decode('utf-8')
+            return "image", b64_str
+        elif ext in ['.drawio', '.xml', '.txt', '.md']:
+            with open(full_path, 'r', encoding='utf-8') as f:
+                return "text", f.read()
+        else:
+            return "text", f"Unsupported architecture file format: {ext}"
 
     def _load_prompts(self) -> tuple[str, Template]:
         sys_path = os.path.join(self.prompts_dir, "system_prompt.txt")
@@ -95,15 +110,14 @@ class LLMAnalyzer:
             control_map[key] = f.get("associated_nist_controls", [])
 
         adjusted_controls = set()
-        # Assume an adjustment happens if the original severity is HIGH/CRITICAL 
-        # and adjusted is LOW/INFO. Or simply if adjusted != original.
+        # Assume an adjustment happens if the original severity is changed (either upgraded or downgraded) or marked as False Positive.
         for af in analyzed_findings:
             key = f"{af.get('finding_id')}_{af.get('resource_id')}"
             orig_sev = af.get("original_severity", "").upper()
             adj_sev = af.get("adjusted_severity", "").upper()
             
-            # If the LLM downgraded severity or explicitly marked it as FP
-            if af.get("is_false_positive") or (orig_sev in ["CRITICAL", "HIGH", "MEDIUM"] and adj_sev in ["LOW", "INFO"]):
+            # If the LLM changed severity or explicitly marked it as FP
+            if af.get("is_false_positive") or (orig_sev and adj_sev and orig_sev != adj_sev):
                 controls = control_map.get(key, [])
                 adjusted_controls.update(controls)
 
@@ -139,9 +153,9 @@ class LLMAnalyzer:
         arch_file = config.get("architecture_context_file")
         if not arch_file:
             console.print(f"[yellow]No architecture_context_file specified for scenario {scenario_name}.[/yellow]")
-        arch_xml = self._read_drawio_xml(arch_file) if arch_file else "None"
+        arch_type, arch_content = self._read_architecture_context(arch_file) if arch_file else ("text", "None")
 
-        parser = CSPMParser()
+        parser = CSPMParser(scenarios_file=self.scenarios_file)
         all_findings = parser.parse_all(scenario_name)
         
         # Group findings by tool
@@ -171,16 +185,68 @@ class LLMAnalyzer:
                     f_copy.pop("associated_nist_controls", None)
                     llm_input_findings.append(f_copy)
                 
-                user_prompt = user_template.render(
-                    architecture_xml=arch_xml,
-                    cspm_findings_json=json.dumps(llm_input_findings, indent=2)
-                )
+                if arch_type == "text":
+                    user_prompt = user_template.render(
+                        architecture_context=arch_content,
+                        cspm_findings_json=json.dumps(llm_input_findings, indent=2)
+                    )
+                    image_b64 = None
+                else:
+                    user_prompt = user_template.render(
+                        architecture_context="[Architecture diagram provided as an image attachment]",
+                        cspm_findings_json=json.dumps(llm_input_findings, indent=2)
+                    )
+                    image_b64 = arch_content
 
-                response_json, metrics = client.analyze(system_prompt, user_prompt)
+                response_json, metrics, raw_response = client.analyze(system_prompt, user_prompt, image_base64=image_b64)
                 
                 analyzed_findings = response_json.get("findings_analysis", [])
+                
+                if not metrics.get("parsing_success"):
+                    console.print(f"[red]Failed to parse JSON response for {model} on {tool}. Marking attempt as invalid.[/red]")
+                    analyzed_findings = []
+                else:
+                    valid = True
+                    for af in analyzed_findings:
+                        matched = any(f["finding_id"] == af.get("finding_id") and f["resource_id"] == af.get("resource_id") for f in findings)
+                        if not matched:
+                            console.print(f"[red]LLM Hallucination detected for {model}: {af.get('finding_id')} / {af.get('resource_id')} not found in original findings! Marking attempt as invalid.[/red]")
+                            valid = False
+                            break
+                    
+                    if not valid:
+                        metrics["parsing_success"] = False
+                        metrics["error_type"] = "API_ERROR"
+                        analyzed_findings = []
+                    else:
+                        full_analyzed_findings = []
+                        for orig in findings:
+                            match = next((af for af in analyzed_findings if orig["finding_id"] == af.get("finding_id") and orig["resource_id"] == af.get("resource_id")), None)
+                            if match:
+                                full_analyzed_findings.append(match)
+                            else:
+                                full_analyzed_findings.append({
+                                    "finding_id": orig["finding_id"],
+                                    "resource_id": orig["resource_id"],
+                                    "original_severity": orig["original_severity"],
+                                    "adjusted_severity": orig["original_severity"],
+                                    "is_false_positive": False,
+                                    "adjustment_category": "NONE",
+                                    "adjustment_reason": ""
+                                })
+                        analyzed_findings = full_analyzed_findings
+                        response_json["findings_analysis"] = analyzed_findings
+
                 nist_metrics = self._calculate_nist_metrics(findings, analyzed_findings)
                 metrics.update(nist_metrics)
+                
+                # Check for ZERO_ADJUSTED and ALL_ADJUSTED edge cases
+                if metrics.get("parsing_success") and metrics.get("error_type", "NONE") == "NONE":
+                    adj_rate = metrics.get("adjustment_rate_percentage", 0.0)
+                    if adj_rate == 0.0:
+                        metrics["error_type"] = "ZERO_ADJUSTED"
+                    elif adj_rate == 100.0:
+                        metrics["error_type"] = "ALL_ADJUSTED"
                 
                 # Save raw results
                 out_dir = os.path.join(self.output_dir, scenario_name, model_slug, tool, run_id)
@@ -191,6 +257,15 @@ class LLMAnalyzer:
                     
                 with open(os.path.join(out_dir, "metrics.json"), "w", encoding="utf-8") as f:
                     json.dump(metrics, f, indent=2)
+
+                with open(os.path.join(out_dir, "system_prompt.txt"), "w", encoding="utf-8") as f:
+                    f.write(system_prompt)
+                    
+                with open(os.path.join(out_dir, "user_prompt.txt"), "w", encoding="utf-8") as f:
+                    f.write(user_prompt)
+                    
+                with open(os.path.join(out_dir, "llm_response.txt"), "w", encoding="utf-8") as f:
+                    f.write(raw_response)
                     
                 # Append to Global CSVs
                 with open(self.metrics_csv_path, 'a', newline='', encoding='utf-8') as f:
@@ -199,7 +274,8 @@ class LLMAnalyzer:
                         run_id, timestamp_iso, scenario_name, model, tool, metrics.get("parsing_success"),
                         metrics.get("total_unique_nist_controls_failed"), metrics.get("nist_controls_adjusted"),
                         metrics.get("adjustment_rate_percentage"), metrics.get("prompt_tokens"),
-                        metrics.get("completion_tokens"), metrics.get("latency_seconds")
+                        metrics.get("completion_tokens"), metrics.get("latency_seconds"),
+                        metrics.get("error_type", "NONE")
                     ])
                 
                 with open(self.findings_csv_path, 'a', newline='', encoding='utf-8') as f:
@@ -220,7 +296,7 @@ class LLMAnalyzer:
                             run_id, model, tool, fid, res_id, res_type,
                             nist_controls_json, af.get("original_severity", "UNKNOWN"),
                             af.get("adjusted_severity", "UNKNOWN"), af.get("is_false_positive", False),
-                            af.get("adjustment_reason", ""), original_justification
+                            af.get("adjustment_category", "NONE"), af.get("adjustment_reason", ""), original_justification
                         ])
                     
                 console.print(f"[green]Saved analysis and metrics to {out_dir}[/green]")

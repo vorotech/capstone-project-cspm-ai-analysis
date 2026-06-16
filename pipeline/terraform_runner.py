@@ -9,9 +9,8 @@ class TerraformRunner:
     """
     Parses the scenarios configuration and executes Terraform commands (init, apply, destroy).
     """
-    def __init__(self, scenarios_file: str, base_path: str = "../data/ecc-aws-rulepack"):
+    def __init__(self, scenarios_file: str):
         self.scenarios_file = scenarios_file
-        self.base_path = base_path
 
     def get_scenario_paths(self, scenario_name: str) -> list[str]:
         """Reads scenarios.yaml and returns the list of absolute paths for the specified scenario."""
@@ -38,14 +37,12 @@ class TerraformRunner:
             console.print(f"[red]Error: Scenario '{scenario_name}' not found in {self.scenarios_file}[/red]")
             return []
 
-        test_type = target_scenario.get("type", "red")
-        rules = target_scenario.get("rules", [])
+        tasks = target_scenario.get("tasks", [])
         
         paths_to_run = []
-        for rule in rules:
-            # According to ecc-aws-rulepack structure: terraform/<rule_name>/<red_or_green>
-            rel_path = os.path.join("terraform", rule, test_type)
-            abs_path = os.path.join(self.base_path, rel_path)
+        scenario_dir = os.path.dirname(os.path.abspath(self.scenarios_file))
+        for task in tasks:
+            abs_path = os.path.join(scenario_dir, task)
             
             if os.path.exists(abs_path):
                 paths_to_run.append(abs_path)
@@ -96,9 +93,8 @@ if __name__ == "__main__":
     # Example usage for manual testing
     # Note: Using absolute path resolution for reliable execution when run directly
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_repo_path = os.path.join(current_dir, "..", "data", "ecc-aws-rulepack")
     scenario_filepath = os.path.join(current_dir, "scenarios.yaml")
     
-    runner = TerraformRunner(scenarios_file=scenario_filepath, base_path=base_repo_path)
+    runner = TerraformRunner(scenarios_file=scenario_filepath)
     # runner.apply("test_s3_red")
     # runner.destroy("test_s3_red")

@@ -11,9 +11,8 @@ class CSPMRunner:
     Executes CSPM tools (Prowler, Security Hub) against deployed infrastructure.
     It reads `scenarios.yaml` to determine what needs to be run.
     """
-    def __init__(self, scenarios_file: str, base_path: str = "../data/ecc-aws-rulepack"):
+    def __init__(self, scenarios_file: str):
         self.scenarios_file = scenarios_file
-        self.base_path = base_path
         # Використовуємо абсолютний шлях для output директорії
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.output_dir = os.path.join(current_dir, "..", "output")
@@ -41,14 +40,10 @@ class CSPMRunner:
         return {}
 
     def run_prowler(self, scenario_name: str, profile: str = "auditor", region: str = "us-east-1"):
-        """Runs Prowler limited to the services defined in the scenario's prowler_scope and NIST compliance."""
+        """Runs Prowler limited to the services defined in the scenario's service_scope and NIST compliance. If no scope is defined, runs all NIST checks."""
         config = self._get_scenario_config(scenario_name)
-        scope = config.get("prowler_scope", [])
+        scope = config.get("service_scope", [])
         
-        if not scope:
-            console.print(f"[yellow]No prowler_scope defined for scenario '{scenario_name}'. Skipping Prowler.[/yellow]")
-            return
-            
         scenario_output_dir = os.path.join(self.output_dir, "prowler", scenario_name)
         
         # Clean up previous Prowler runs to prevent file accumulation
@@ -56,42 +51,21 @@ class CSPMRunner:
             shutil.rmtree(scenario_output_dir)
         os.makedirs(scenario_output_dir, exist_ok=True)
 
-        console.print(f"\n[bold magenta]--- Running Prowler for scope: {', '.join(scope)} (NIST 800-53 Rev 5) ---[/bold magenta]")
-        
-        # 1. Fetch all NIST 800-53 Rev 5 checks
-        console.print("[cyan]Fetching NIST 800-53 Rev 5 checks from Prowler...[/cyan]")
-        try:
-            import json
-            list_cmd = ["prowler", "aws", "--compliance", "nist_800_53_revision_5_aws", "--list-checks-json"]
-            result = subprocess.run(list_cmd, check=True, capture_output=True, text=True)
-            data = json.loads(result.stdout)
-            all_nist_checks = data.get("aws", [])
+        if not scope:
+            console.print(f"\n[bold magenta]--- Running Prowler for ALL services (NIST 800-53 Rev 5) ---[/bold magenta]")
+        else:
+            console.print(f"\n[bold magenta]--- Running Prowler for scope: {', '.join(scope)} (NIST 800-53 Rev 5) ---[/bold magenta]")
             
-            # Filter checks by service prefixes (e.g., "s3_", "ec2_")
-            target_checks = []
-            for check in all_nist_checks:
-                if any(check.startswith(f"{svc}_") for svc in scope):
-                    target_checks.append(check)
-                    
-            if not target_checks:
-                console.print(f"[yellow]No NIST checks found for scope {scope}. Skipping Prowler.[/yellow]")
-                return
-                
-        except Exception as e:
-            console.print(f"[red]Error fetching NIST checks:[/red] {e}")
-            return
-            
-        # 2. Run Prowler with the filtered checks
+        # 2. Run Prowler with compliance framework (we will filter services later during parsing)
         cmd = [
             "prowler", "aws",
-            "--checks"
-        ] + target_checks + [
+            "--compliance", "nist_800_53_revision_5_aws",
             "--output-directory", scenario_output_dir,
             "--profile", profile,
             "--region", region
         ]
         
-        console.print(f"[cyan]Running Prowler with {len(target_checks)} specific NIST checks...[/cyan]")
+            
         try:
             subprocess.run(cmd, check=False, capture_output=True, text=True)
             console.print(f"[green]Success: Prowler finished. Output in {scenario_output_dir}[/green]")
@@ -106,7 +80,7 @@ class CSPMRunner:
         output_file = os.path.join(scenario_output_dir, "findings.json")
 
         config = self._get_scenario_config(scenario_name)
-        scope = config.get("prowler_scope", [])
+        scope = config.get("service_scope", [])
         
         try:
             import boto3
@@ -160,8 +134,7 @@ class CSPMRunner:
 if __name__ == "__main__":
     # Example usage for manual testing
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    base_repo_path = os.path.join(current_dir, "..", "data", "ecc-aws-rulepack")
     scenario_filepath = os.path.join(current_dir, "scenarios.yaml")
     
-    runner = CSPMRunner(scenarios_file=scenario_filepath, base_path=base_repo_path)
+    runner = CSPMRunner(scenarios_file=scenario_filepath)
     # runner.run_all("test_s3_red")

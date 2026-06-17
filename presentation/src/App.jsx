@@ -8,6 +8,276 @@ import './App.css'; // Just for standard imports if needed, though most styling 
 
 // --- Slide Components ---
 
+const SlideTitle = () => {
+  const canvasRef = React.useRef(null);
+  const animFrameRef = React.useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    const resize = () => {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      w = canvas.width = rect.width * window.devicePixelRatio;
+      h = canvas.height = rect.height * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // --- Particles (constellation nodes) ---
+    const particleCount = 80;
+    const particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * (w / window.devicePixelRatio),
+        y: Math.random() * (h / window.devicePixelRatio),
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: Math.random() * 1.8 + 0.5,
+        pulse: Math.random() * Math.PI * 2,
+        type: Math.random() > 0.7 ? 'accent' : 'normal', // 30% are accent nodes
+      });
+    }
+
+    // --- Data stream columns ---
+    const streamCount = 6;
+    const streams = [];
+    const chars = '01▪▫◆◇●○□■△▲'.split('');
+    for (let i = 0; i < streamCount; i++) {
+      const col = [];
+      const x = (w / window.devicePixelRatio) * (0.08 + Math.random() * 0.84);
+      const speed = 0.4 + Math.random() * 0.6;
+      const len = 8 + Math.floor(Math.random() * 12);
+      for (let j = 0; j < len; j++) {
+        col.push({
+          x,
+          y: -j * 18 - Math.random() * 200,
+          char: chars[Math.floor(Math.random() * chars.length)],
+          speed,
+          opacity: 1 - j / len,
+        });
+      }
+      streams.push(col);
+    }
+
+    // --- Hexagonal grid (subtle background pattern) ---
+    const hexSize = 40;
+    const hexPoints = [];
+    const realW = w / window.devicePixelRatio;
+    const realH = h / window.devicePixelRatio;
+    for (let row = -1; row < realH / (hexSize * 1.5) + 1; row++) {
+      for (let col = -1; col < realW / (hexSize * Math.sqrt(3)) + 1; col++) {
+        const cx = col * hexSize * Math.sqrt(3) + (row % 2) * hexSize * Math.sqrt(3) / 2;
+        const cy = row * hexSize * 1.5;
+        hexPoints.push({ x: cx, y: cy, phase: Math.random() * Math.PI * 2 });
+      }
+    }
+
+    // --- Concentric rings (center processing core) ---
+    const centerX = realW / 2;
+    const centerY = realH / 2;
+    const rings = [
+      { r: 120, speed: 0.3, dash: [4, 12], alpha: 0.12 },
+      { r: 160, speed: -0.2, dash: [2, 8], alpha: 0.08 },
+      { r: 200, speed: 0.15, dash: [6, 18], alpha: 0.06 },
+      { r: 250, speed: -0.1, dash: [3, 15], alpha: 0.04 },
+    ];
+
+    let t = 0;
+
+    const draw = () => {
+      const rW = w / window.devicePixelRatio;
+      const rH = h / window.devicePixelRatio;
+      ctx.clearRect(0, 0, rW, rH);
+      t += 0.008;
+
+      // 1. Hex grid (very subtle)
+      ctx.strokeStyle = 'rgba(59, 130, 246, 0.04)';
+      ctx.lineWidth = 0.5;
+      hexPoints.forEach(hp => {
+        const pulse = Math.sin(t * 0.5 + hp.phase) * 0.02 + 0.04;
+        ctx.strokeStyle = `rgba(59, 130, 246, ${pulse})`;
+        ctx.beginPath();
+        for (let k = 0; k < 6; k++) {
+          const angle = Math.PI / 3 * k - Math.PI / 6;
+          const px = hp.x + hexSize * 0.5 * Math.cos(angle);
+          const py = hp.y + hexSize * 0.5 * Math.sin(angle);
+          k === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      });
+
+      // 2. Concentric rings
+      rings.forEach(ring => {
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(t * ring.speed);
+        ctx.strokeStyle = `rgba(59, 130, 246, ${ring.alpha})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash(ring.dash);
+        ctx.beginPath();
+        ctx.arc(0, 0, ring.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      });
+
+      // 3. Particles + constellation edges
+      const connectionDist = 120;
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulse += 0.02;
+        if (p.x < -10) p.x = rW + 10;
+        if (p.x > rW + 10) p.x = -10;
+        if (p.y < -10) p.y = rH + 10;
+        if (p.y > rH + 10) p.y = -10;
+      });
+
+      // Draw edges
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDist) {
+            const alpha = (1 - dist / connectionDist) * 0.12;
+            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      particles.forEach(p => {
+        const glow = Math.sin(p.pulse) * 0.3 + 0.7;
+        const isAccent = p.type === 'accent';
+        const baseAlpha = isAccent ? 0.6 : 0.3;
+        const color = isAccent ? `rgba(99, 102, 241, ${baseAlpha * glow})` : `rgba(59, 130, 246, ${baseAlpha * glow})`;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * glow, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        
+        if (isAccent) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${0.05 * glow})`;
+          ctx.fill();
+        }
+      });
+
+      // 4. Data streams
+      ctx.font = '10px monospace';
+      streams.forEach(col => {
+        col.forEach(ch => {
+          ch.y += ch.speed;
+          if (ch.y > rH + 20) {
+            ch.y = -20;
+            ch.char = chars[Math.floor(Math.random() * chars.length)];
+          }
+          const fadeZone = rH * 0.15;
+          let alpha = ch.opacity * 0.2;
+          if (ch.y < fadeZone) alpha *= ch.y / fadeZone;
+          if (ch.y > rH - fadeZone) alpha *= (rH - ch.y) / fadeZone;
+          ctx.fillStyle = `rgba(59, 130, 246, ${Math.max(0, alpha)})`;
+          ctx.fillText(ch.char, ch.x, ch.y);
+        });
+      });
+
+      // 5. Scanning line (horizontal sweep)
+      const scanY = (Math.sin(t * 0.4) * 0.5 + 0.5) * rH;
+      const scanGrad = ctx.createLinearGradient(0, scanY - 1, 0, scanY + 1);
+      scanGrad.addColorStop(0, 'rgba(59, 130, 246, 0)');
+      scanGrad.addColorStop(0.5, 'rgba(59, 130, 246, 0.06)');
+      scanGrad.addColorStop(1, 'rgba(59, 130, 246, 0)');
+      ctx.fillStyle = scanGrad;
+      ctx.fillRect(0, scanY - 30, rW, 60);
+
+      animFrameRef.current = requestAnimationFrame(draw);
+    };
+
+    animFrameRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden'}}>
+      {/* Canvas Background */}
+      <canvas
+        ref={canvasRef}
+        style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0}}
+      />
+
+      {/* Center Content — no panel, text directly over canvas */}
+      <div style={{zIndex: 1, textAlign: 'center', position: 'relative'}}>
+
+        {/* Thin horizontal line above */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          style={{ width: '320px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent)', margin: '0 auto 2rem' }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.25em', marginBottom: '1.5rem' }}>
+            Capstone Project
+          </div>
+
+          <h1 style={{fontSize: '4rem', fontWeight: '800', color: '#0f172a', marginBottom: '0.75rem', letterSpacing: '-0.04em', lineHeight: 1.1}}>
+            AI CSPM{' '}
+            <span style={{background: 'linear-gradient(135deg, #3b82f6, #6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+              Overwatch
+            </span>
+          </h1>
+
+          <p style={{fontSize: '1.15rem', color: '#64748b', maxWidth: '560px', margin: '0 auto', lineHeight: '1.6', fontWeight: '400'}}>
+            Інтелектуальна переоцінка ризиків безпеки хмарної інфраструктури на основі архітектурного контексту
+          </p>
+        </motion.div>
+
+        {/* Thin horizontal line below */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut', delay: 0.6 }}
+          style={{ width: '320px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent)', margin: '2rem auto 0' }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          style={{ marginTop: '2rem', fontSize: '0.85rem', color: '#94a3b8', letterSpacing: '0.05em' }}
+        >
+          Dmytro Vorotyntsev
+        </motion.div>
+
+      </div>
+    </div>
+  );
+};
+
 const SlideProblem = () => (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>1. Мета дослідження</h2>
@@ -776,25 +1046,26 @@ function App() {
   }, []);
 
   const slides = [
-    <SlideProblem key={0} />,
-    <SlideQuestion key={1} />,
-    <SlideTasks key={2} />,
-    <SlideHypothesis key={3} />,
-    <SlideConstraints key={4} />,
-    <SlideArchitecture key={5} />,
-    <SlideDeploy key={6} />,
-    <SlideFindings key={7} />,
-    <SlideNormalization key={8} />,
-    <SlidePrompt key={9} />,
-    <SlideResponse key={10} />,
+    <SlideTitle key={0} />,
+    <SlideProblem key={1} />,
+    <SlideQuestion key={2} />,
+    <SlideTasks key={3} />,
+    <SlideHypothesis key={4} />,
+    <SlideConstraints key={5} />,
+    <SlideArchitecture key={6} />,
+    <SlideDeploy key={7} />,
+    <SlideFindings key={8} />,
+    <SlideNormalization key={9} />,
+    <SlidePrompt key={10} />,
     <SlideAnalysisPhases key={11} />,
-    <SlideQualityCheck key={12} />,
-    <SlideCalculations key={13} />,
-    <SlideDashboardCharts key={14} chartData={chartData} />,
-    <SlideDashboardTable key={15} tableRows={tableRows} />,
-    <SlideConclusions key={16} />,
-    <SlideFuture key={17} />,
-    <SlideThankYou key={18} />
+    <SlideResponse key={12} />,
+    <SlideQualityCheck key={13} />,
+    <SlideCalculations key={14} />,
+    <SlideDashboardCharts key={15} chartData={chartData} />,
+    <SlideDashboardTable key={16} tableRows={tableRows} />,
+    <SlideConclusions key={17} />,
+    <SlideFuture key={18} />,
+    <SlideThankYou key={19} />
   ];
 
   const totalSlides = slides.length;
@@ -826,7 +1097,7 @@ function App() {
   return (
     <div className="dashboard-container" style={{height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden'}}>
       <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, marginBottom: '1rem'}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '1rem', opacity: currentSlide === 0 ? 0 : 1, transition: 'opacity 0.3s ease'}}>
           <div className="logo-icon">
             <ShieldAlert color="#fff" size={24} />
           </div>

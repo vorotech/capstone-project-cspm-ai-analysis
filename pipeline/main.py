@@ -31,9 +31,10 @@ def run_report(args=None):
     console.print("\n[bold yellow]--- Generating HTML Report ---[/bold yellow]")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     notebook_path = os.path.join(base_dir, "analysis", "results_analysis.ipynb")
+    public_dir = os.path.join(base_dir, "presentation", "public")
     try:
-        subprocess.run(["jupyter", "nbconvert", "--to", "html", "--execute", notebook_path], check=True, cwd=base_dir)
-        console.print("[bold green]Success: Report generated at analysis/results_analysis.html[/bold green]")
+        subprocess.run(["jupyter", "nbconvert", "--to", "html", "--execute", notebook_path, "--output-dir", public_dir], check=True, cwd=base_dir)
+        console.print("[bold green]Success: Report generated directly at presentation/public/results_analysis.html[/bold green]")
     except Exception as e:
         console.print(f"[bold red]Error generating report:[/bold red] {e}")
 
@@ -56,21 +57,9 @@ def run_destroy(args):
     runner = TerraformRunner(scenarios_file=args.scenarios_file)
     runner.destroy(args.scenario)
 
-def run_all(args):
-    """Executes the full pipeline from start to finish."""
-    console.print(f"\n[bold green]=== Starting Full Pipeline for Scenario: {args.scenario} ===[/bold green]")
-    try:
-        run_apply(args)
-        run_cspm(args)
-        run_analyze(args)
-    except Exception as e:
-        console.print(f"[bold red]Error during pipeline execution: {e}[/bold red]")
-    finally:
-        console.print("\n[bold yellow]=== Ensuring Cleanup (Destroy) ===[/bold yellow]")
-        run_destroy(args)
 
 def main():
-    parser = argparse.ArgumentParser(description="CSPM AI Analysis Pipeline Manager")
+    parser = argparse.ArgumentParser(description="AI CSPM Overwatch Pipeline Manager")
     
     # Global arguments
     parser.add_argument(
@@ -106,10 +95,7 @@ def main():
     parser_destroy = subparsers.add_parser("destroy", parents=[parent_parser, scenario_parser], help="Destroy deployed Terraform infrastructure")
     parser_destroy.set_defaults(func=run_destroy)
     
-    # Subcommand: run-all
-    parser_run_all = subparsers.add_parser("run-all", parents=[parent_parser, scenario_parser], help="Run full pipeline: apply -> cspm -> analyze -> destroy")
-    parser_run_all.set_defaults(func=run_all)
-    
+
     # Subcommand: report
     parser_report = subparsers.add_parser("report", parents=[parent_parser], help="Generate HTML report from Jupyter Notebook")
     parser_report.set_defaults(func=run_report)

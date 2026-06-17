@@ -1,397 +1,58 @@
 {
-  "all": {
-    "kpis": {
-      "total_runs": 15,
-      "avg_adjustment_rate": 32.934,
-      "avg_prompt_tokens": 4951.5,
-      "avg_completion_tokens": 5924.766666666666,
-      "avg_latency": 54.30566666666667,
-      "decision_consistency": 56.11
-    },
-    "model_comparison": [
-      {
-        "model": "gemini-3.5-flash",
-        "adjustment_rate": 31.73,
-        "latency": 27.62
-      },
-      {
-        "model": "minimax-m3",
-        "adjustment_rate": 41.7,
-        "latency": 97.3
-      },
-      {
-        "model": "kimi-k2.7-code",
-        "adjustment_rate": 30.79,
-        "latency": 158.06
-      }
-    ],
-    "token_efficiency": [
-      {
-        "model": "gemini-3.5-flash",
-        "total_tokens": 10666,
-        "latency": 27.62
-      },
-      {
-        "model": "minimax-m3",
-        "total_tokens": 9505,
-        "latency": 97.3
-      },
-      {
-        "model": "kimi-k2.7-code",
-        "total_tokens": 13398,
-        "latency": 158.06
-      }
-    ],
-    "top_adjusted_controls": [
-      {
-        "control": "SC-7",
-        "adjustments_count": 94,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-6",
-        "adjustments_count": 93,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(16)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-4(21)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(3)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(11)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(21)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(20)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-3",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-3(7)",
-        "adjustments_count": 85,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      }
-    ],
-    "category_distribution": [
-      {
-        "name": "BUSINESS_REQUIREMENT",
-        "value": 1008
-      },
-      {
-        "name": "COMPENSATING_CONTROL",
-        "value": 936
-      },
-      {
-        "name": "SENSITIVE_DATA_EXPOSURE",
-        "value": 381
-      },
-      {
-        "name": "TEST_RESOURCE",
-        "value": 381
-      },
-      {
-        "name": "ACCEPTED_RISK",
-        "value": 227
-      },
-      {
-        "name": "INCREASED_CONTEXTUAL_RISK",
-        "value": 90
-      },
-      {
-        "name": "TOOL_INACCURACY",
-        "value": 24
-      },
-      {
-        "name": "THIRD_PARTY_MANAGED",
-        "value": 17
-      }
-    ]
-  },
   "prowler": {
-    "kpis": {
-      "total_runs": 15,
-      "avg_adjustment_rate": 34.21333333333334,
-      "avg_prompt_tokens": 2764.9333333333334,
-      "avg_completion_tokens": 3745.0666666666666,
-      "avg_latency": 30.450666666666667,
-      "decision_consistency": 55.81
-    },
-    "model_comparison": [
+    "models_summary": [
       {
         "model": "gemini-3.5-flash",
-        "adjustment_rate": 33.02,
-        "latency": 20.1
-      },
-      {
-        "model": "minimax-m3",
-        "adjustment_rate": 64.24,
-        "latency": 71.71
-      },
-      {
-        "model": "kimi-k2.7-code",
-        "adjustment_rate": 10.76,
-        "latency": 46.1
-      }
-    ],
-    "token_efficiency": [
-      {
-        "model": "gemini-3.5-flash",
-        "total_tokens": 6432,
-        "latency": 20.1
-      },
-      {
-        "model": "minimax-m3",
-        "total_tokens": 5162,
-        "latency": 71.71
-      },
-      {
-        "model": "kimi-k2.7-code",
-        "total_tokens": 8282,
-        "latency": 46.1
-      }
-    ],
-    "top_adjusted_controls": [
-      {
-        "control": "CM-6(a)",
-        "adjustments_count": 30,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "CM-9(b)",
-        "adjustments_count": 30,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "3-13(5)",
-        "adjustments_count": 22,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "SC-7",
-        "adjustments_count": 22,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "AC-6",
-        "adjustments_count": 21,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "DS-5",
-        "adjustments_count": 21,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "3-3(8)",
-        "adjustments_count": 19,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "3-13(1)",
-        "adjustments_count": 17,
-        "common_category": "SENSITIVE_DATA_EXPOSURE",
-        "resource_type": "s3"
-      },
-      {
-        "control": "3-1(1)",
-        "adjustments_count": 15,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      },
-      {
-        "control": "3-1(2)",
-        "adjustments_count": 15,
-        "common_category": "BUSINESS_REQUIREMENT",
-        "resource_type": "s3"
-      }
-    ],
-    "category_distribution": [
-      {
-        "name": "BUSINESS_REQUIREMENT",
-        "value": 636
-      },
-      {
-        "name": "SENSITIVE_DATA_EXPOSURE",
-        "value": 381
-      },
-      {
-        "name": "TEST_RESOURCE",
-        "value": 381
-      },
-      {
-        "name": "COMPENSATING_CONTROL",
-        "value": 102
-      },
-      {
-        "name": "INCREASED_CONTEXTUAL_RISK",
-        "value": 90
-      },
-      {
-        "name": "THIRD_PARTY_MANAGED",
-        "value": 17
+        "adjustment_rate": 26.32,
+        "decision_consistency": 56.52,
+        "latency": 19.88,
+        "total_tokens": 6365,
+        "adjustment_categories": {
+          "BUSINESS_REQUIREMENT": 14,
+          "SENSITIVE_DATA_EXPOSURE": 9,
+          "THIRD_PARTY_MANAGED": 1
+        }
       }
     ]
   },
   "securityhub": {
-    "kpis": {
-      "total_runs": 15,
-      "avg_adjustment_rate": 31.654666666666664,
-      "avg_prompt_tokens": 7138.066666666667,
-      "avg_completion_tokens": 8104.466666666666,
-      "avg_latency": 78.16066666666666,
-      "decision_consistency": 56.2
-    },
-    "model_comparison": [
+    "models_summary": [
       {
         "model": "gemini-3.5-flash",
         "adjustment_rate": 30.44,
-        "latency": 35.14
-      },
-      {
-        "model": "minimax-m3",
-        "adjustment_rate": 19.16,
-        "latency": 122.9
+        "decision_consistency": 56.36,
+        "latency": 35.14,
+        "total_tokens": 14901,
+        "adjustment_categories": {
+          "BUSINESS_REQUIREMENT": 48,
+          "COMPENSATING_CONTROL": 45,
+          "ACCEPTED_RISK": 31,
+          "TOOL_INACCURACY": 6
+        }
       },
       {
         "model": "kimi-k2.7-code",
         "adjustment_rate": 50.83,
-        "latency": 270.01
-      }
-    ],
-    "token_efficiency": [
-      {
-        "model": "gemini-3.5-flash",
-        "total_tokens": 14901,
-        "latency": 35.14
+        "decision_consistency": 34.15,
+        "latency": 270.01,
+        "total_tokens": 18513,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 15,
+          "BUSINESS_REQUIREMENT": 15,
+          "ACCEPTED_RISK": 9
+        }
       },
       {
         "model": "minimax-m3",
+        "adjustment_rate": 19.16,
+        "decision_consistency": 78.05,
+        "latency": 122.9,
         "total_tokens": 13849,
-        "latency": 122.9
-      },
-      {
-        "model": "kimi-k2.7-code",
-        "total_tokens": 18513,
-        "latency": 270.01
-      }
-    ],
-    "top_adjusted_controls": [
-      {
-        "control": "SC-7(21)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-4(21)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-3",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(3)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-6",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(20)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(4)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "AC-21",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      },
-      {
-        "control": "SC-7(11)",
-        "adjustments_count": 72,
-        "common_category": "COMPENSATING_CONTROL",
-        "resource_type": "ec2"
-      }
-    ],
-    "category_distribution": [
-      {
-        "name": "COMPENSATING_CONTROL",
-        "value": 834
-      },
-      {
-        "name": "BUSINESS_REQUIREMENT",
-        "value": 372
-      },
-      {
-        "name": "ACCEPTED_RISK",
-        "value": 227
-      },
-      {
-        "name": "TOOL_INACCURACY",
-        "value": 24
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 6,
+          "BUSINESS_REQUIREMENT": 6,
+          "ACCEPTED_RISK": 3
+        }
       }
     ]
   }

@@ -3,37 +3,78 @@ scenarios:
     service_scope:
       - iam
     tasks:
-      - data/terraform/ecc-aws-001-ensure_mfa_is_enabled_for_all_iam_users_with_console_password/red
-      - data/terraform/ecc-aws-018-iam_users_receive_permissions_only_through_groups/red
-      - data/terraform/ecc-aws-019-iam_password_policy_password_reuse/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-001-ensure_mfa_is_enabled_for_all_iam_users_with_console_password/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-018-iam_users_receive_permissions_only_through_groups/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-019-iam_password_policy_password_reuse/red
 
   - name: test_s3_red
     architecture_context_file: "docs/diagrams/aws-multi-tier-architecture.md"
     service_scope: ['s3', 'ec2']
     tasks:
-      - data/terraform/ecc-aws-004-bucket_policy_allows_https_requests/red
-      - data/terraform/ecc-aws-042-s3_encrypted_using_kms/red
-      - data/terraform/ecc-aws-043-s3_bucket_lifecycle/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-004-bucket_policy_allows_https_requests/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-042-s3_encrypted_using_kms/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-043-s3_bucket_lifecycle/red
 
   - name: test_s3_green
     service_scope:
       - s3
     tasks:
-      - data/terraform/ecc-aws-004-bucket_policy_allows_https_requests/green
-      - data/terraform/ecc-aws-042-s3_encrypted_using_kms/green
+      - data/ecc-aws-rulepack/terraform/ecc-aws-004-bucket_policy_allows_https_requests/green
+      - data/ecc-aws-rulepack/terraform/ecc-aws-042-s3_encrypted_using_kms/green
 
   - name: test_ec2_red
     service_scope:
       - ec2
     tasks:
-      - data/terraform/ecc-aws-020-instance_without_any_tag/red
-      - data/terraform/ecc-aws-025-instance_without_termination_protection/red
-      - data/terraform/ecc-aws-186-ec2_instance_no_public_ip/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-020-instance_without_any_tag/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-025-instance_without_termination_protection/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-186-ec2_instance_no_public_ip/red
 
   - name: test_rds_red
     service_scope:
       - rds
     tasks:
-      - data/terraform/ecc-aws-005-rds_not_open_to_large_scope/red
-      - data/terraform/ecc-aws-026-rds_instance_with_no_backups/red
-      - data/terraform/ecc-aws-127-rds_cluster_storage_is_encrypted/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-005-rds_not_open_to_large_scope/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-026-rds_instance_with_no_backups/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-127-rds_cluster_storage_is_encrypted/red
+
+  - name: aws_multi_tier_application
+    architecture_context_file: "docs/diagrams/aws-multi-tier-architecture.md"
+    tasks:
+      - data/ecc-aws-rulepack/terraform/ecc-aws-003-ensure_vpc_flow_logging_enabled_for_every_vpc/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-007-rds_high-availability_zone/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-012-use_secure_ciphers_in_cloudfront_distribution/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-022-ebs_volumes_too_old_snapshots/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-024-ensures_sqs_encryption_is_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-040-eks_cluster_version_latest/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-042-s3_encrypted_using_kms/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-043-s3_bucket_lifecycle/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-053-cloudtrail_log_validation_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-059-config_enabled_all_regions/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-064-default_security_group_every_vpc_restricts_all_traffic/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-066-eks_cluster_protected_endpoint_access/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-075-elasticsearch_service_domains_encryption_at_rest/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-083-cloud_front_waf_integration/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-086-lambda_with_admin_privileges/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-095-aws_config_configuration_changes_alarm_exists/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-105-kinesis_streams_keys_are_rotated-deprecated/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-111-alb_is_protected_by_waf_regional/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-119-kinesis_streams_encrypted_kms_customer_master_keys/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-153-elasticsearch_domains_audit_logging_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-193-alb_drop_invalid_http_header/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-195-alb_http_to_https_redirection_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-221-sns_kms_encryption_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-252-glue_data_catalog_encrypted_at_rest/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-253-glue_data_catalog_encrypted_with_kms_customer_master_keys/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-298-sqs_encrypted_with_kms_cmk/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-335-lambda_active_tracing_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-352-sns_encrypted_with_kms_cmk/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-501-opensearch_access_control_enabled/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-566-opensearch_auto_tune_enabled/red
+
+
+  - name: invalid_cleanup
+    tasks:
+      - data/ecc-aws-rulepack/terraform/ecc-aws-011-http_elb_certificate_expire_in_one_month/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-055-cloudtrail_integrated_with_cloudwatch/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-065-encrypted_connection_between_cloudfront_origin/red

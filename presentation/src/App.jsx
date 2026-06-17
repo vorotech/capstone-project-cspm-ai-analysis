@@ -3,69 +3,174 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { ChevronLeft, ChevronRight, ShieldAlert, Cpu, Network, FileJson, CheckCircle2, AlertTriangle, Lightbulb, Maximize } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ShieldAlert, Cpu, Network, FileJson, CheckCircle2, AlertTriangle, Lightbulb, Maximize, User, Folder, FileText, Terminal, HelpCircle, Brain, TrendingUp, EyeOff, Cloud } from 'lucide-react';
 import './App.css'; // Just for standard imports if needed, though most styling is inline/index.css
 
 // --- Slide Components ---
 
 const SlideProblem = () => (
-  <div className="slide-content">
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>1. Мета дослідження</h2>
-    <div className="placeholder-box" style={{textAlign: 'left'}}>
-      <p style={{textIndent: '2rem'}}>
-        Традиційні інструменти Cloud Security Posture Management (CSPM), такі як AWS Security Hub та Prowler, часто генерують значну кількість невідповідностей,
-        які <strong>після глибшого ручного аналізу виявляються false positives</strong>, оскільки вони не враховують бізнес-контекст, компенсуючих заходів чи архітектурних рішень.
-      </p>
-    </div>
-    <div className="placeholder-box" style={{textAlign: 'left'}}>
-      <p style={{textIndent: '2rem'}}>
-        Метою цього дослідження є перевірка, чи може ШІ аналізувати результати CSPM-сканувань разом із архітектурними діаграмами
-        для <strong>автоматичного відсіювання помилкових спрацьовувань та обґрунтованого коригування рівня ризику</strong> згідно зі стандартом NIST 800-53 Rev 5.
-      </p>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+      
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#ef4444'}}>
+          <AlertTriangle size={28} style={{marginRight: '12px'}}/> Проблема
+        </h3>
+        <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
+          Традиційні інструменти Cloud Security Posture Management (CSPM), такі як AWS Security Hub та Prowler, часто генерують значну кількість невідповідностей.
+        </p>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(239, 68, 68, 0.08)', borderLeft: '4px solid #ef4444', borderRadius: '4px'}}>
+          <p style={{margin: 0, color: '#b91c1c', fontWeight: '500', lineHeight: '1.6'}}>
+            Після глибшого ручного аналізу вони часто виявляються false positives, оскільки не враховують бізнес-контекст, компенсуючі заходи чи архітектурні рішення.
+          </p>
+        </div>
+      </div>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#10b981'}}>
+          <Lightbulb size={28} style={{marginRight: '12px'}}/> Ідея та Рішення
+        </h3>
+        <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
+          Перевірити, чи може ШІ аналізувати результати CSPM-сканувань разом із архітектурними діаграмами для:
+        </p>
+        <ul style={{marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', listStyle: 'none', padding: 0}}>
+          <li style={{display: 'flex', alignItems: 'flex-start'}}>
+            <CheckCircle2 color="#10b981" size={20} style={{marginRight: '12px', flexShrink: 0, marginTop: '2px'}} />
+            <span style={{fontWeight: '500', color: '#0f172a', lineHeight: '1.5'}}>Автоматичного відсіювання помилкових спрацьовувань</span>
+          </li>
+          <li style={{display: 'flex', alignItems: 'flex-start'}}>
+            <CheckCircle2 color="#10b981" size={20} style={{marginRight: '12px', flexShrink: 0, marginTop: '2px'}} />
+            <span style={{fontWeight: '500', color: '#0f172a', lineHeight: '1.5'}}>Обґрунтованого коригування рівня ризику (NIST 800-53 Rev 5)</span>
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
 );
 
 const SlideQuestion = () => (
-  <div className="slide-content">
-    <h2>2. Дослідницьке питання</h2>
-    <div className="highlight-box" style={{background: 'rgba(139, 92, 246, 0.1)', border: '2px solid #8b5cf6', padding: '2rem', borderRadius: '12px'}}>
-      <h3 style={{color: '#6d28d9', fontSize: '1.8rem', lineHeight: '1.4'}}>
-        Чи здатні великі мовні моделі (LLM) ефективно виконувати роль контекстно-залежного хмарного аудитора, консістентно аналізуючи результати CSPM-інструментів 
-        на основі архітектурних діаграм для відсіювання false positives та обґрунтованого коригування рівня ризику?
-      </h3>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>2. Головне дослідницьке питання</h2>
+    <div style={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div className="card" style={{position: 'relative', overflow: 'hidden', padding: '4rem 3rem', border: '1px solid #e2e8f0', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', textAlign: 'center', maxWidth: '1000px'}}>
+        
+        {/* Decorative background element */}
+        <div style={{position: 'absolute', top: '-20px', left: '-20px', opacity: '0.04'}}>
+          <HelpCircle size={200} color="#8b5cf6" />
+        </div>
+        
+        <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <h3 style={{color: '#1e293b', fontSize: '1.8rem', lineHeight: '1.6', fontWeight: '500', margin: 0}}>
+            Чи здатні великі мовні моделі (LLM) ефективно виконувати роль <span style={{color: '#8b5cf6', fontWeight: '700'}}>контекстно-залежного хмарного аудитора</span>, 
+            стабільно аналізуючи результати CSPM-інструментів на основі архітектурних діаграм для відсіювання false positives та <span style={{color: '#8b5cf6', fontWeight: '700'}}>обґрунтованого коригування рівня ризику</span>?
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
 );
 
-const SlideTasks = () => (
-  <div className="slide-content">
-    <h2>3. Завдання дослідження</h2>
-    <ul className="styled-list">
-      <li>1: Автоматизувати розгортання тестової інфраструктури в AWS за допомогою Terraform</li>
-      <li>2: Зібрати невідповідності конфігурацій за допомогою Prowler та AWS Security Hub CSPM</li>
-      <li>3: Розробити універсальний промпт та пайплайн для LLM аналізу</li>
-      <li>4: Зібрати відповіді від LLM різного розміру та архітектури</li>
-      <li>5: Провести порівняльний аналіз здатності різних моделей консистентно визначати false positives та коригувати рівень ризику</li>
-    </ul>
-  </div>
-);
+const SlideTasks = () => {
+  const tasks = [
+    "Автоматизувати розгортання тестової інфраструктури в AWS за допомогою Terraform",
+    "Зібрати невідповідності конфігурацій за допомогою Prowler та AWS Security Hub CSPM",
+    "Розробити універсальний промпт та пайплайн для LLM аналізу",
+    "Зібрати відповіді від LLM різного розміру та архітектури",
+    "Провести порівняльний аналіз здатності різних моделей визначати false positives та коригувати ризик"
+  ];
+
+  return (
+    <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+      <h2>3. Завдання дослідження</h2>
+      <div style={{flexGrow: 1, display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center', alignContent: 'center', paddingBottom: '2rem'}}>
+        {tasks.map((task, index) => (
+          <div key={index} className="card" style={{
+            width: 'calc(33.333% - 1rem)', 
+            minWidth: '260px', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            padding: '2rem 1.5rem',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div style={{
+              fontSize: '6rem', 
+              fontWeight: '900', 
+              color: 'rgba(59, 130, 246, 0.04)', 
+              position: 'absolute', 
+              bottom: '-20px', 
+              right: '-10px',
+              lineHeight: 1,
+              userSelect: 'none'
+            }}>
+              {index + 1}
+            </div>
+            <div style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', position: 'relative', zIndex: 1}}>
+              <div style={{
+                width: '32px', 
+                height: '32px', 
+                borderRadius: '50%', 
+                background: '#eff6ff', 
+                color: '#3b82f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 'bold',
+                marginRight: '12px',
+                border: '1px solid #bfdbfe'
+              }}>
+                {index + 1}
+              </div>
+              <div style={{height: '2px', flexGrow: 1, background: 'linear-gradient(90deg, #bfdbfe 0%, transparent 100%)'}}></div>
+            </div>
+            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0, position: 'relative', zIndex: 1}}>
+              {task}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const SlideHypothesis = () => (
-  <div className="slide-content">
-    <h2>4. Висунуті гіпотеза</h2>
-    <div className="placeholder-box" style={{textAlign: 'left'}}>
-      <p style={{textIndent: '2rem'}}>
-        Моделі з великим контекстним вікном і високими показниками <strong>Reasoning</strong> зможуть
-        досягти <strong>Decision Consistency &gt; 85%</strong> при аналізі архітектурного контексту, 
-        тоді як менші моделі схильні до галюцинацій та екстремумів (0% або 100%)
-      </p>
-    </div>
-    <div className="placeholder-box" style={{textAlign: 'left'}}>
-      <p style={{textIndent: '2rem'}}>
-        Під час аналізу передаються результати Prowler, Security Hub, а також текстовий опис, зображення або drawio XML архітектурна діаграма
-        тестової інфраструктури, але без врахування коду конфігурації – тестування в умовах обмеженого доступу до інформації.
-      </p>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>4. Висунуті гіпотези</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+      
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#3b82f6'}}>
+          <TrendingUp size={28} style={{marginRight: '12px'}}/> 1. Консистентність рішень
+        </h3>
+        <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
+          Моделі з великим контекстним вікном і високими показниками <strong>Reasoning</strong> зможуть досягти <span style={{color: '#2563eb', fontWeight: '700'}}>Decision Consistency &gt; 85%</span> при аналізі архітектурного контексту.
+        </p>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(59, 130, 246, 0.08)', borderLeft: '4px solid #3b82f6', borderRadius: '4px'}}>
+          <p style={{margin: 0, color: '#1d4ed8', fontWeight: '500', lineHeight: '1.6'}}>
+            Це дозволить перейти на автоматичне опрацювання ризикованих коригувань, суттєво зменшуючи навантаження на спеціаліста.
+          </p>
+        </div>
+        <p style={{fontSize: '0.95rem', color: '#64748b', lineHeight: '1.6', marginTop: '1.5rem'}}>
+          Натомість менші моделі будуть схильні до галюцинацій та екстремумів (впевненість 0% або 100% при хибних відповідях).
+        </p>
+      </div>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#f59e0b'}}>
+          <EyeOff size={28} style={{marginRight: '12px'}}/> 2. Аналіз в умовах обмежених даних
+        </h3>
+        <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
+          Під час аналізу ШІ передаються лише результати сканування (Prowler, Security Hub) та архітектурний контекст (опис, зображення або draw.io XML).
+        </p>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(245, 158, 11, 0.08)', borderLeft: '4px solid #f59e0b', borderRadius: '4px'}}>
+          <p style={{margin: 0, color: '#b45309', fontWeight: '500', lineHeight: '1.6'}}>
+            Аналіз проводиться <strong>без доступу до вихідного коду</strong> конфігурацій (Terraform тощо), імітуючи умови обмеженого доступу аудитора.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 );
@@ -131,98 +236,304 @@ const SlideArchitecture = () => (
 );
 
 const SlideDeploy = () => (
-  <div className="slide-content">
-    <h2>7. Як я деплоїв тестові конфігурації</h2>
-    <div className="card">
-      <p>Використовується подвійний підхід (Scenarios) через <strong>Terraform</strong>:</p>
-      <ul>
-        <li><span style={{color: '#dc2626', fontWeight: 'bold'}}>RED</span> - Вразлива інфраструктура (повинна генерувати True Positives).</li>
-        <li><span style={{color: '#10b981', fontWeight: 'bold'}}>GREEN</span> - Захищена інфраструктура з компенсуючими контролями (повинна генерувати False Positives для стандартних сканерів).</li>
-      </ul>
-      <pre>python main.py apply --scenario test_s3_red</pre>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>7. Підготовка: Управління інфраструктурою</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Panel 1: AWS Profile */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
+          <User size={20} style={{marginRight: '8px'}}/> AWS: Профіль Розгортання
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          Для підготовки середовища використовується AWS-профіль із високими привілеями (наприклад, <strong>AdministratorAccess</strong>). Пайплайн автоматично використовує <code>boto3</code> та AWS CLI для розгортання інфраструктури.
+        </p>
+      </div>
+
+      {/* Panel 2: ECC AWS Rulepack */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981'}}>
+          <Folder size={20} style={{marginRight: '8px'}}/> Джерело конфігурацій
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          База вразливих конфігурацій — проєкт <strong>epam/ecc-aws-rulepack</strong>. Містить <code>red</code> (вразливі) та <code>green</code> (безпечні) Terraform модулі. Пайплайн гнучкий і підтримує будь-який валідний код.
+        </p>
+      </div>
+
+      {/* Panel 3: Scenarios File */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#f59e0b'}}>
+          <FileText size={20} style={{marginRight: '8px'}}/> Сценарій: aws_multi_tier
+        </h3>
+        <p style={{fontSize: '0.85rem', color: '#475569', lineHeight: '1.5', marginBottom: '1rem'}}>
+          Оркестрація запуску керується файлом <code>scenarios.yaml</code>. Для нашої діаграми ми зібрали відповідні вразливі конфігурації:
+        </p>
+        <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowX: 'auto'}}>
+          name: aws_multi_tier_application<br/>
+          tasks:<br/>
+          &nbsp;&nbsp;- .../ecc-aws-066-eks_cluster_protected_endpoint_access/red<br/>
+          &nbsp;&nbsp;- .../ecc-aws-111-alb_is_protected_by_waf_regional/red<br/>
+          &nbsp;&nbsp;[... загалом ~35+ модулів]
+        </pre>
+      </div>
+
+      {/* Panel 4: CLI Commands */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#8b5cf6'}}>
+          <Terminal size={20} style={{marginRight: '8px'}}/> Команди Пайплайну
+        </h3>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <div>
+            <span style={{fontSize: '0.8rem', fontWeight: 'bold', color: '#64748b', textTransform: 'uppercase'}}>Запуск конфігурації (Deploy)</span>
+            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
+              python pipeline/main.py deploy --scenario aws_multi_tier_application
+            </pre>
+          </div>
+          <div>
+            <span style={{fontSize: '0.8rem', fontWeight: 'bold', color: '#64748b', textTransform: 'uppercase'}}>Знищення конфігурації (Destroy)</span>
+            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
+              python pipeline/main.py destroy --scenario aws_multi_tier_application
+            </pre>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 );
 
 const SlideFindings = () => (
-  <div className="slide-content">
-    <h2>8. Як я збирав findings</h2>
-    <div className="card">
-      <h3>CSPM Runner</h3>
-      <p>Спеціальний клас на Python (`cspm_runner.py`), який:</p>
-      <ul>
-        <li>Запускає <code>prowler aws</code> через CLI і парсить JSON вивід.</li>
-        <li>Використовує <code>boto3</code> (SecurityHub API) для отримання алертів ASFF.</li>
-        <li>Зберігає "сирі" (raw) логи у папці <code>data/findings/raw/</code>.</li>
-      </ul>
-      <pre>python main.py cspm --scenario test_s3_red</pre>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>8. Сканування: Керування захищеністю хмари (CSPM)</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Panel 1: Аудитор */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
+          <User size={20} style={{marginRight: '8px'}}/> AWS: Профіль Аудитора
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          Для отримання результатів сканування (findings) використовується окремий профіль із роллю <strong>Security Auditor</strong>. Це гарантує мінімальні необхідні привілеї (read-only) для збору метрик.
+        </p>
+      </div>
+
+      {/* Panel 2: Prowler */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981'}}>
+          <Terminal size={20} style={{marginRight: '8px'}}/> Інструмент: Prowler
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          Рішення, яке легко інтегрується в CI/CD пайплайни. Має різноманітні перевірки для AWS (та інших хмар), містить набір готових правил відповідності (включно з NIST). Виконує сканування <strong>під час запуску</strong>.
+        </p>
+      </div>
+
+      {/* Panel 3: AWS Security Hub */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#f59e0b'}}>
+          <Cloud size={20} style={{marginRight: '8px'}}/> Інструмент: AWS Security Hub
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          Нативне рішення, що виконується повністю всередині AWS та використовує набір готових AWS Config Rules. Також доступний NIST compliance. Виконує <strong>періодичні перевірки</strong> по внутрішнім тригерам.
+        </p>
+      </div>
+
+      {/* Panel 4: Збір Результатів */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#8b5cf6'}}>
+          <Folder size={20} style={{marginRight: '8px'}}/> Обробка результатів
+        </h3>
+        <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.5'}}>
+          Результати (CSPM findings) з обох інструментів агрегуються та зберігаються в локальній директорії проєкту для їхнього подальшого опрацювання LLM-моделями.
+        </p>
+      </div>
+
     </div>
   </div>
 );
 
 const SlideNormalization = () => (
-  <div className="slide-content">
-    <h2>9. Як я нормалізовую дані</h2>
-    <div style={{display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
-      <div className="card" style={{flex: 1, minWidth: '300px'}}>
-        <h3>Сирий алерт (Prowler)</h3>
-        <pre style={{fontSize: '0.75rem'}}>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>9. Нормалізація: Контекст високої щільності для LLM</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Panel 1: Raw Prowler */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem', overflow: 'hidden'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#f43f5e', fontSize: '1.1rem'}}>
+          <FileJson size={20} style={{marginRight: '8px'}}/> Сирий об'єкт Prowler (надлишково)
+        </h3>
+        <p style={{fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem', lineHeight: '1.4'}}>
+          Оригінальні результати сканування містять багато метаданих, опису ризиків та кроків виправлення, що марно витрачає токени LLM.
+        </p>
+        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
 {`{
-  "Status": "FAIL",
-  "Severity": "Critical",
-  "CheckID": "s3_bucket_public_access",
-  "ResourceArn": "arn:aws:s3:::my-bucket"
+  "finding_info": {
+    "desc": "**Amazon S3 buckets** are evaluated for...",
+    "title": "S3 bucket has server access logging enabled",
+    "types": [
+      "Software and Configuration Checks/AWS Security...",
+      "Software and Configuration Checks/Industry..."
+    ],
+    "uid": "prowler-aws-s3_bucket_server_access_logging_enabled-1234567890-red"
+  },
+  "resources": [
+    {
+      "cloud_partition": "aws",
+      "region": "us-east-1",
+      "data": { ... }
+    }
+  ],
+  "risk_details": "Without access logs, object reads..."
 }`}
         </pre>
       </div>
-      <div className="card" style={{flex: 1, minWidth: '300px'}}>
-        <h3>Нормалізований JSON</h3>
-        <pre style={{fontSize: '0.75rem'}}>
+
+      {/* Panel 2: Normalized JSON */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem', overflow: 'hidden'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981', fontSize: '1.1rem'}}>
+          <CheckCircle2 size={20} style={{marginRight: '8px'}}/> Оптимізований квант інформації
+        </h3>
+        <p style={{fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem', lineHeight: '1.4'}}>
+          Уніфікований та максимально стиснутий формат. Містить лише ту інформацію, яка критична для аналізу контексту моделлю.
+        </p>
+        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
 {`{
-  "finding_id": "s3_bucket_public_access",
-  "cspm_tool": "Prowler",
-  "resource_id": "arn:aws:s3:::my-bucket",
-  "original_severity": "CRITICAL",
-  "associated_nist_controls": ["AC-3"]
+  "tool": "prowler",
+  "finding_id": "s3_account_level_public_access_blocks",
+  "resource_id": "arn:aws:s3:us-east-1:1234567890:account",
+  "original_severity": "HIGH",
+  "description": "Block Public Access is not configured for the account 1234567890."
 }`}
         </pre>
       </div>
+
     </div>
   </div>
 );
 
 const SlidePrompt = () => (
-  <div className="slide-content">
-    <h2>10. Системний Prompt</h2>
-    <div className="card" style={{fontSize: '0.85rem', maxHeight: '400px', overflowY: 'auto'}}>
-      <p><strong>Роль:</strong> You are an expert Cloud Security Architect and Auditor...</p>
-      <p><strong>Завдання:</strong> Determine if a finding is a False Positive, or if the Risk Severity should be adjusted based on the provided Architecture Context.</p>
-      <div style={{background: '#fff3cd', color: '#856404', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid #ffeeba'}}>
-        <strong>Rule 6: AVOID EXTREMES</strong><br/>
-        A realistic architectural analysis rarely results in 100% or 0% of findings being adjusted. Do not blindly accept or blindly reject all findings. Evaluate each finding rigorously on its own merits.
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>10. Системний Prompt: Контекстне ядро</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Column 1: Role & Instructions */}
+      <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <div className="card" style={{padding: '1.25rem'}}>
+          <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '0.75rem', color: '#3b82f6', fontSize: '1.1rem'}}>
+            <Terminal size={20} style={{marginRight: '8px'}}/> Role & Task
+          </h3>
+          <p style={{fontSize: '0.85rem', color: '#475569', lineHeight: '1.5', margin: 0}}>
+            <strong>Роль:</strong> Expert Cloud Security Architect and AWS Auditor.<br/>
+            <strong>Завдання:</strong> Аналіз CSPM знахідок на фоні архітектурного контексту для визначення справжніх ризиків, хибних спрацювань (False Positives) або пом'якшених загроз.
+          </p>
+        </div>
+
+        <div className="card" style={{padding: '1.25rem', flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
+          <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '0.75rem', color: '#10b981', fontSize: '1.1rem'}}>
+            <CheckCircle2 size={20} style={{marginRight: '8px'}}/> Key Instructions
+          </h3>
+          <ul style={{fontSize: '0.85rem', color: '#475569', lineHeight: '1.5', margin: 0, paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+            <li><strong>Rule 1 (Analyze Context):</strong> Ретельно проаналізувати архітектурний контекст для розуміння мережевих потоків та бізнес-логіки ресурсів.</li>
+            <li><strong>Rule 2 & 3 (Compensating Controls):</strong> Знизити критичність (Severity) або позначити як FP, якщо архітектура має компенсуючі механізми захисту.</li>
+            <li><strong>Rule 4 (Strict JSON):</strong> Відповідати виключно у валідному JSON форматі згідно із заданою схемою (без додаткового тексту чи маркдауну).</li>
+            <li><strong>Rule 5 (Token Optimization):</strong> Повертати лише ті знахідки, які <em>потребують коригування</em>. Пропускати незмінні.</li>
+            <li><strong>Rule 6 (Avoid Extremes):</strong> Уникати крайнощів (0% або 100% коригувань). Оцінювати кожну знахідку індивідуально, уникаючи сліпого погодження чи відхилення.</li>
+          </ul>
+        </div>
       </div>
+
+      {/* Column 2: Output Schema */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '0.75rem', color: '#8b5cf6', fontSize: '1.1rem'}}>
+          <FileJson size={20} style={{marginRight: '8px'}}/> Expected JSON Output
+        </h3>
+        <p style={{fontSize: '0.85rem', color: '#475569', marginBottom: '1rem', lineHeight: '1.4'}}>
+          Модель зобов'язана відповісти строго за схемою, використовуючи заздалегідь визначені категорії коригувань (Adjustment Categories).
+        </p>
+        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto'}}>
+{`{
+  "findings_analysis": [
+    {
+      "finding_id": "string",
+      "resource_id": "string",
+      "original_severity": "string",
+      "adjusted_severity": "CRITICAL | HIGH | MEDIUM...",
+      "is_false_positive": boolean,
+      "adjustment_category": "COMPENSATING_CONTROL | 
+                              ISOLATED_ENVIRONMENT | 
+                              BUSINESS_REQUIREMENT | 
+                              TOOL_INACCURACY | 
+                              ACCEPTED_RISK | ...",
+      "adjustment_reason": "Детальне обґрунтування..."
+    }
+  ]
+}`}
+        </pre>
+      </div>
+
     </div>
   </div>
 );
 
 const SlideResponse = () => (
-  <div className="slide-content">
-    <h2>11. Як LLM відповідає (Приклад)</h2>
-    <div className="card">
-      <pre style={{fontSize: '0.8rem'}}>
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>11. Переоцінка: LLM корегування ризику</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Code Snippet */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem', overflow: 'hidden'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981', fontSize: '1.1rem'}}>
+          <FileJson size={20} style={{marginRight: '8px'}}/> Вихідний JSON (LLM Output)
+        </h3>
+        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
 {`{
-  "evaluated_findings": [
-    {
-      "finding_id": "s3_bucket_public_access",
-      "resource_id": "arn:aws:s3:::my-bucket",
-      "is_false_positive": true,
-      "adjusted_severity": "INFO",
-      "adjustment_category": "ISOLATED_ENVIRONMENT",
-      "rationale": "Бакет дійсно є публічним, але згідно з архітектурною діаграмою, він використовується виключно для роздачі статичних публічних ассетів (CloudFront origin). Отже, це очікувана поведінка."
-    }
-  ]
+  "finding_id": "security-control/S3.17",
+  "resource_id": "arn:aws:s3:::042-bucket-8007366-red",
+  "original_severity": "MEDIUM",
+  "adjusted_severity": "LOW",
+  "is_false_positive": false,
+  "adjustment_category": "COMPENSATING_CONTROL",
+  "adjustment_reason": "The bucket is encrypted at rest with Amazon S3-managed keys (SSE-S3) and is not publicly accessible per the architecture. SSE-S3 satisfies the encryption requirement; KMS would be an additional key-management enhancement rather than a fix for unencrypted data."
 }`}
-      </pre>
+        </pre>
+      </div>
+
+      {/* Anatomy of Decision */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#3b82f6', fontSize: '1.1rem'}}>
+          <Brain size={20} style={{marginRight: '8px'}}/> Анатомія Рішення
+        </h3>
+        
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+          
+          {/* Було -> Стало */}
+          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+            <div style={{flex: 1, padding: '1rem', background: '#fef3c7', borderRadius: '8px', border: '1px solid #fde68a', textAlign: 'center'}}>
+              <div style={{fontSize: '0.85rem', color: '#b45309', marginBottom: '0.25rem'}}>Було (CSPM)</div>
+              <div style={{fontWeight: 'bold', color: '#92400e', fontSize: '1.1rem'}}>MEDIUM</div>
+            </div>
+            
+            <ChevronRight size={24} color="#94a3b8"/>
+            
+            <div style={{flex: 1, padding: '1rem', background: '#dcfce3', borderRadius: '8px', border: '1px solid #bbf7d0', textAlign: 'center'}}>
+              <div style={{fontSize: '0.85rem', color: '#166534', marginBottom: '0.25rem'}}>Стало (LLM)</div>
+              <div style={{fontWeight: 'bold', color: '#15803d', fontSize: '1.1rem'}}>LOW</div>
+            </div>
+          </div>
+
+          {/* Причина */}
+          <div style={{background: 'rgba(59, 130, 246, 0.08)', borderRadius: '8px', padding: '1.25rem', borderLeft: '4px solid #3b82f6'}}>
+            <div style={{fontSize: '0.9rem', color: '#1d4ed8', fontWeight: 'bold', marginBottom: '0.5rem'}}>
+              Категорія: COMPENSATING_CONTROL
+            </div>
+            <div style={{fontSize: '0.85rem', color: '#475569', fontWeight: 'bold', marginBottom: '0.25rem'}}>Причина:</div>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: 0, lineHeight: '1.5'}}>
+              Модель виявила, що бакет вже захищений базовим шифруванням (SSE-S3) і не є публічним згідно з архітектурою. Тому вимогу використання саме KMS класифіковано як додаткове покращення, а не критичну вразливість.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 );

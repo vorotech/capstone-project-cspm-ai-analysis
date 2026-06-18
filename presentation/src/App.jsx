@@ -290,7 +290,7 @@ const SlideProblem = () => (
         <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
           Традиційні інструменти Cloud Security Posture Management (CSPM), такі як AWS Security Hub та Prowler, часто генерують значну кількість невідповідностей.
         </p>
-        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(239, 68, 68, 0.08)', borderLeft: '4px solid #ef4444', borderRadius: '4px'}}>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(239, 68, 68, 0.08)', borderLeft: '4px solid #ef4444', borderRadius: '0'}}>
           <p style={{margin: 0, color: '#b91c1c', fontWeight: '500', lineHeight: '1.6'}}>
             Після глибшого ручного аналізу вони часто виявляються false positives, оскільки не враховують бізнес-контекст, компенсуючі заходи чи архітектурні рішення.
           </p>
@@ -417,7 +417,7 @@ const SlideHypothesis = () => (
         <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
           Моделі з великим контекстним вікном і високими показниками <strong>Reasoning</strong> зможуть досягти <span style={{color: '#2563eb', fontWeight: '700'}}>Decision Consistency &gt; 85%</span> при аналізі архітектурного контексту.
         </p>
-        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(59, 130, 246, 0.08)', borderLeft: '4px solid #3b82f6', borderRadius: '4px'}}>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(59, 130, 246, 0.08)', borderLeft: '4px solid #3b82f6', borderRadius: '0'}}>
           <p style={{margin: 0, color: '#1d4ed8', fontWeight: '500', lineHeight: '1.6'}}>
             Це дозволить перейти на автоматичне опрацювання ризикованих коригувань, суттєво зменшуючи навантаження на спеціаліста.
           </p>
@@ -434,7 +434,7 @@ const SlideHypothesis = () => (
         <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
           Під час аналізу ШІ передаються лише результати сканування (Prowler, Security Hub) та архітектурний контекст (опис, зображення або draw.io XML).
         </p>
-        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(245, 158, 11, 0.08)', borderLeft: '4px solid #f59e0b', borderRadius: '4px'}}>
+        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(245, 158, 11, 0.08)', borderLeft: '4px solid #f59e0b', borderRadius: '0'}}>
           <p style={{margin: 0, color: '#b45309', fontWeight: '500', lineHeight: '1.6'}}>
             Аналіз проводиться <strong>без доступу до вихідного коду</strong> конфігурацій (Terraform тощо), імітуючи умови обмеженого доступу аудитора.
           </p>
@@ -499,7 +499,7 @@ const SlideConstraints = () => (
 const SlideArchitecture = () => (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>6. Архітектура тестової інфраструктури</h2>
-    <div style={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', borderRadius: '12px', padding: '1rem', border: '1px solid #e2e8f0', overflow: 'hidden'}}>
+    <div style={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', borderRadius: '0', padding: '1rem', border: '1px solid #e2e8f0', overflow: 'hidden'}}>
       <img src="/aws-multi-tier-architecture.drawio.png" alt="Architecture Diagram" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
     </div>
   </div>
@@ -538,7 +538,7 @@ const SlideDeploy = () => (
         <p style={{fontSize: '0.85rem', color: '#475569', lineHeight: '1.5', marginBottom: '1rem'}}>
           Оркестрація запуску керується файлом <code>scenarios.yaml</code>. Для нашої діаграми ми зібрали відповідні вразливі конфігурації:
         </p>
-        <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowX: 'auto'}}>
+        <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '0', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowX: 'auto'}}>
           name: aws_multi_tier_application<br/>
           tasks:<br/>
           &nbsp;&nbsp;- .../ecc-aws-066-eks_cluster_protected_endpoint_access/red<br/>
@@ -555,13 +555,13 @@ const SlideDeploy = () => (
         <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
           <div>
             <span style={{fontSize: '0.8rem', fontWeight: 'bold', color: '#64748b', textTransform: 'uppercase'}}>Запуск конфігурації (Deploy)</span>
-            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
+            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '0', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
               python pipeline/main.py deploy --scenario aws_multi_tier_application
             </pre>
           </div>
           <div>
             <span style={{fontSize: '0.8rem', fontWeight: 'bold', color: '#64748b', textTransform: 'uppercase'}}>Знищення конфігурації (Destroy)</span>
-            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
+            <pre style={{fontSize: '0.75rem', background: '#f8fafc', padding: '0.75rem', borderRadius: '0', border: '1px solid #e2e8f0', color: '#0f172a', marginTop: '0.5rem', margin: 0, overflowX: 'auto'}}>
               python pipeline/main.py destroy --scenario aws_multi_tier_application
             </pre>
           </div>
@@ -634,7 +634,7 @@ const SlideNormalization = () => (
         <p style={{fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem', lineHeight: '1.4'}}>
           Оригінальні результати сканування містять багато метаданих, опису ризиків та кроків виправлення, що марно витрачає токени LLM.
         </p>
-        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
+        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '0', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
 {`{
   "finding_info": {
     "desc": "**Amazon S3 buckets** are evaluated for...",
@@ -665,7 +665,7 @@ const SlideNormalization = () => (
         <p style={{fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem', lineHeight: '1.4'}}>
           Уніфікований та максимально стиснутий формат. Містить лише ту інформацію, яка критична для аналізу контексту моделлю.
         </p>
-        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
+        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '0', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
 {`{
   "tool": "prowler",
   "finding_id": "s3_account_level_public_access_blocks",
@@ -719,7 +719,7 @@ const SlidePrompt = () => (
         <p style={{fontSize: '0.85rem', color: '#475569', marginBottom: '1rem', lineHeight: '1.4'}}>
           Модель зобов'язана відповісти строго за схемою, використовуючи заздалегідь визначені категорії коригувань (Adjustment Categories).
         </p>
-        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto'}}>
+        <pre style={{flexGrow: 1, fontSize: '0.7rem', background: '#f8fafc', padding: '1rem', borderRadius: '0', border: '1px solid #e2e8f0', color: '#0f172a', margin: 0, overflowY: 'auto'}}>
 {`{
   "findings_analysis": [
     {
@@ -744,73 +744,9 @@ const SlidePrompt = () => (
   </div>
 );
 
-const SlideResponse = () => (
-  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-    <h2>11. Переоцінка: LLM корегування ризику</h2>
-    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
-      
-      {/* Code Snippet */}
-      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem', overflow: 'hidden'}}>
-        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981', fontSize: '1.1rem'}}>
-          <FileJson size={20} style={{marginRight: '8px'}}/> Вихідний JSON (LLM Output)
-        </h3>
-        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '6px', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
-{`{
-  "finding_id": "security-control/S3.17",
-  "resource_id": "arn:aws:s3:::042-bucket-8007366-red",
-  "original_severity": "MEDIUM",
-  "adjusted_severity": "LOW",
-  "is_false_positive": false,
-  "adjustment_category": "COMPENSATING_CONTROL",
-  "adjustment_reason": "The bucket is encrypted at rest with Amazon S3-managed keys (SSE-S3) and is not publicly accessible per the architecture. SSE-S3 satisfies the encryption requirement; KMS would be an additional key-management enhancement rather than a fix for unencrypted data."
-}`}
-        </pre>
-      </div>
-
-      {/* Anatomy of Decision */}
-      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem'}}>
-        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#3b82f6', fontSize: '1.1rem'}}>
-          <Brain size={20} style={{marginRight: '8px'}}/> Анатомія Рішення
-        </h3>
-        
-        <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
-          
-          {/* Було -> Стало */}
-          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-            <div style={{flex: 1, padding: '1rem', background: '#fef3c7', borderRadius: '8px', border: '1px solid #fde68a', textAlign: 'center'}}>
-              <div style={{fontSize: '0.85rem', color: '#b45309', marginBottom: '0.25rem'}}>Було (CSPM)</div>
-              <div style={{fontWeight: 'bold', color: '#92400e', fontSize: '1.1rem'}}>MEDIUM</div>
-            </div>
-            
-            <ChevronRight size={24} color="#94a3b8"/>
-            
-            <div style={{flex: 1, padding: '1rem', background: '#dcfce3', borderRadius: '8px', border: '1px solid #bbf7d0', textAlign: 'center'}}>
-              <div style={{fontSize: '0.85rem', color: '#166534', marginBottom: '0.25rem'}}>Стало (LLM)</div>
-              <div style={{fontWeight: 'bold', color: '#15803d', fontSize: '1.1rem'}}>LOW</div>
-            </div>
-          </div>
-
-          {/* Причина */}
-          <div style={{background: 'rgba(59, 130, 246, 0.08)', borderRadius: '8px', padding: '1.25rem', borderLeft: '4px solid #3b82f6'}}>
-            <div style={{fontSize: '0.9rem', color: '#1d4ed8', fontWeight: 'bold', marginBottom: '0.5rem'}}>
-              Категорія: COMPENSATING_CONTROL
-            </div>
-            <div style={{fontSize: '0.85rem', color: '#475569', fontWeight: 'bold', marginBottom: '0.25rem'}}>Причина:</div>
-            <p style={{fontSize: '0.85rem', color: '#475569', margin: 0, lineHeight: '1.5'}}>
-              Модель виявила, що бакет вже захищений базовим шифруванням (SSE-S3) і не є публічним згідно з архітектурою. Тому вимогу використання саме KMS класифіковано як додаткове покращення, а не критичну вразливість.
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-  </div>
-);
-
 const SlideAnalysisPhases = () => (
   <div className="slide-content">
-    <h2>12. Етапи аналізу відповіді LLM</h2>
+    <h2>11. Етапи аналізу відповіді LLM</h2>
     <div className="funnel-container" style={{marginTop: '1rem'}}>
       <div className="funnel-stage" style={{width: '90%', background: '#e0f2fe', color: '#1e3a8a'}}>
         <strong>Етап 1: Оцінка якості</strong><br/>
@@ -838,35 +774,154 @@ const SlideAnalysisPhases = () => (
   </div>
 );
 
-const SlideQualityCheck = () => (
-  <div className="slide-content">
-    <h2>13. Оцінка якості моделей (Етап 1)</h2>
-    <div className="card">
-      <h3>Відсіювання неякісних запусків</h3>
-      <p>Модель вважається нестабільною та виключається з подальшого порівняння, якщо показник <strong>OK Status</strong> становить менше <strong>80%</strong>. Причини фейлів:</p>
-      <ul>
-        <li><span style={{color: 'darkred', fontWeight: 'bold'}}>TIMEOUT</span>: Перевищено ліміт часу (120с).</li>
-        <li><span style={{color: 'crimson', fontWeight: 'bold'}}>API_ERROR</span>: Помилка формату JSON або відмова API.</li>
-        <li><span style={{color: 'orange', fontWeight: 'bold'}}>ZERO_ADJUSTED</span>: Модель нічого не змінила (можливі "лінощі" LLM).</li>
-        <li><span style={{color: 'gold', fontWeight: 'bold'}}>ALL_ADJUSTED</span>: Модель позначила абсолютно всі файндинги як False Positive (галюцинація / надмірна довіра).</li>
-      </ul>
+const SlideResponse = () => (
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>12. Переоцінка: LLM корегування ризику</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem'}}>
+      
+      {/* Code Snippet */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem', overflow: 'hidden'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981', fontSize: '1.1rem'}}>
+          <FileJson size={20} style={{marginRight: '8px'}}/> Вихідний JSON (LLM Output)
+        </h3>
+        <pre style={{flexGrow: 1, fontSize: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '0', border: '1px solid #10b981', color: '#0f172a', margin: 0, overflowY: 'auto', boxShadow: 'inset 0 0 0 1px rgba(16, 185, 129, 0.2)', whiteSpace: 'pre-wrap', wordBreak: 'break-word'}}>
+{`{
+  "finding_id": "security-control/S3.17",
+  "resource_id": "arn:aws:s3:::042-bucket-8007366-red",
+  "original_severity": "MEDIUM",
+  "adjusted_severity": "LOW",
+  "is_false_positive": false,
+  "adjustment_category": "COMPENSATING_CONTROL",
+  "adjustment_reason": "The bucket is encrypted at rest with Amazon S3-managed keys (SSE-S3) and is not publicly accessible per the architecture. SSE-S3 satisfies the encryption requirement; KMS would be an additional key-management enhancement rather than a fix for unencrypted data."
+}`}
+        </pre>
+      </div>
+
+      {/* Anatomy of Decision */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column', padding: '1.25rem'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem', color: '#3b82f6', fontSize: '1.1rem'}}>
+          <Brain size={20} style={{marginRight: '8px'}}/> Анатомія Рішення
+        </h3>
+        
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+          
+          {/* Було -> Стало */}
+          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+            <div style={{flex: 1, padding: '1rem', background: '#fef3c7', borderRadius: '0', border: '1px solid #fde68a', textAlign: 'center'}}>
+              <div style={{fontSize: '0.85rem', color: '#b45309', marginBottom: '0.25rem'}}>Було (CSPM)</div>
+              <div style={{fontWeight: 'bold', color: '#92400e', fontSize: '1.1rem'}}>MEDIUM</div>
+            </div>
+            
+            <ChevronRight size={24} color="#94a3b8"/>
+            
+            <div style={{flex: 1, padding: '1rem', background: '#dcfce3', borderRadius: '0', border: '1px solid #bbf7d0', textAlign: 'center'}}>
+              <div style={{fontSize: '0.85rem', color: '#166534', marginBottom: '0.25rem'}}>Стало (LLM)</div>
+              <div style={{fontWeight: 'bold', color: '#15803d', fontSize: '1.1rem'}}>LOW</div>
+            </div>
+          </div>
+
+          {/* Причина */}
+          <div style={{background: 'rgba(59, 130, 246, 0.08)', borderRadius: '0', padding: '1.25rem', borderLeft: '4px solid #3b82f6'}}>
+            <div style={{fontSize: '0.9rem', color: '#1d4ed8', fontWeight: 'bold', marginBottom: '0.5rem'}}>
+              Категорія: COMPENSATING_CONTROL
+            </div>
+            <div style={{fontSize: '0.85rem', color: '#475569', fontWeight: 'bold', marginBottom: '0.25rem'}}>Причина:</div>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: 0, lineHeight: '1.5'}}>
+              Модель виявила, що бакет вже захищений базовим шифруванням (SSE-S3) і не є публічним згідно з архітектурою. Тому вимогу використання саме KMS класифіковано як додаткове покращення, а не критичну вразливість.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </div>
 );
 
-const SlideCalculations = () => (
+const SlideQualityCheck = () => (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-    <h2>14. Етап 2. Розрахунки (Jupyter Notebook)</h2>
-    <div style={{flexGrow: 1, border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', background: '#fff', marginTop: '1rem'}}>
-      <iframe src="/results_analysis.html" width="100%" height="100%" style={{border: 'none'}} title="Results Analysis Notebook"></iframe>
+    <h2>13. Етап 1: Оцінка якості</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
+          Відсіювання неякісних запусків
+        </h3>
+        <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.7', marginBottom: '1rem'}}>
+          Модель вважається нестабільною та виключається з подальшого порівняння, якщо показник <strong>OK Status</strong> становить менше <strong>75.0%</strong>. Причини фейлів:
+        </p>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+          <div style={{padding: '0.75rem', background: 'rgba(239, 68, 68, 0.05)', borderLeft: '3px solid #dc2626'}}>
+            <strong style={{fontSize: '0.85rem', color: '#991b1b'}}>TIMEOUT</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Перевищено ліміт часу (120с).</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(220, 38, 38, 0.05)', borderLeft: '3px solid #b91c1c'}}>
+            <strong style={{fontSize: '0.85rem', color: '#991b1b'}}>API_ERROR</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Помилка формату JSON або відмова API.</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid #f59e0b'}}>
+            <strong style={{fontSize: '0.85rem', color: '#92400e'}}>ZERO_ADJUSTED / ALL_ADJUSTED</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Вважаємо галюцинаціями (екстремуми).</p>
+          </div>
+        </div>
+      </div>
+      <div style={{background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+        <img src="/1_filter_out_results_below_threshold.png" alt="Оцінка якості" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+      </div>
+    </div>
+  </div>
+);
+
+const SlideMetrics = () => (
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>14. Етап 2: Розрахунок метрик</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+
+      {/* Left: Metrics descriptions */}
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
+          <TrendingUp size={20} style={{marginRight: '8px'}}/> Оцінювані метрики
+        </h3>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1}}>
+          <div style={{padding: '0.75rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#1e40af'}}>Adjustment Rate (%)</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Відсоток знахідок CSPM, для яких LLM змінила критичність або позначила їх як False Positive.</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(16, 185, 129, 0.05)', borderLeft: '3px solid #10b981'}}>
+            <strong style={{fontSize: '0.85rem', color: '#065f46'}}>Decision Consistency (%)</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Стабільність рішень моделі. Показує, наскільки часто модель для однієї і тієї ж знахідки (в різних запусках) повертає ідентичну оцінку.</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(139, 92, 246, 0.05)', borderLeft: '3px solid #8b5cf6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#5b21b6'}}>Adjustment Categories</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Розподіл причин зміни знахідок: COMPENSATING_CONTROL, ISOLATED_ENVIRONMENT, TOOL_INACCURACY, BUSINESS_REQUIREMENT тощо.</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid #f59e0b'}}>
+            <strong style={{fontSize: '0.85rem', color: '#92400e'}}>Ефективність та вартість</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Залежність між розміром контексту (вхідні токени), згенерованим виводом (вихідні токени) та швидкістю прийняття рішень (Latency).</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Right: 3 image placeholders stacked */}
+      <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
+          <img src="/metric_placeholder_1.png" alt="Metric 1" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 1</span>'; }} />
+        </div>
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
+          <img src="/metric_placeholder_2.png" alt="Metric 2" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 2</span>'; }} />
+        </div>
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
+          <img src="/metric_placeholder_3.png" alt="Metric 3" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 3</span>'; }} />
+        </div>
+      </div>
+
     </div>
   </div>
 );
 
 const SlideDashboardCharts = ({ chartData }) => (
   <div className="slide-content">
-    <h2>15. Оцінка параметрів (Prowler vs Security Hub)</h2>
-    <div className="chart-container" style={{height: '400px', background: 'white', padding: '1rem', borderRadius: '12px'}}>
+    <h2>15. Етап 3: Порівняльний аналіз</h2>
+    <div className="chart-container" style={{height: '400px', background: 'white', padding: '1rem', borderRadius: '0'}}>
       {chartData.length > 0 ? (
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 20, right: 20, left: 0, bottom: 40 }}>
@@ -874,7 +929,7 @@ const SlideDashboardCharts = ({ chartData }) => (
             <XAxis dataKey="name" stroke="#64748b" tick={{fill: '#64748b', fontSize: 11}} angle={-45} textAnchor="end" height={60} />
             <YAxis yAxisId="left" stroke="#64748b" tick={{fill: '#64748b'}} tickFormatter={(val) => `${val}%`} />
             <YAxis yAxisId="right" orientation="right" stroke="#dc2626" tick={{fill: '#dc2626'}} tickFormatter={(val) => `${val}%`} />
-            <RechartsTooltip contentStyle={{ backgroundColor: 'rgba(255,255,255,0.95)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '12px' }}/>
+            <RechartsTooltip contentStyle={{ backgroundColor: 'rgba(255,255,255,0.95)', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '0' }}/>
             <Legend verticalAlign="top" wrapperStyle={{paddingBottom: '20px'}}/>
             
             <Bar yAxisId="left" dataKey="prowler_adj" fill="#ef4444" name="Prowler Adj Rate" radius={[4, 4, 0, 0]} barSize={20} />
@@ -901,7 +956,7 @@ const getCatColor = (cat) => catColors[cat] || catColors.DEFAULT;
 
 const SlideDashboardTable = ({ tableRows }) => (
   <div className="slide-content">
-    <h2>16. Оцінка параметрів (Деталі та Категорії)</h2>
+    <h2>16. Етап 4: Висновки щодо LLM-моделей</h2>
     <div className="table-container" style={{overflowX: 'auto', maxHeight: '400px', background: 'white', borderRadius: '0', border: '1px solid #e2e8f0'}}>
       <table style={{width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem'}}>
         <thead style={{position: 'sticky', top: 0, background: '#f8fafc', zIndex: 1}}>
@@ -921,7 +976,7 @@ const SlideDashboardTable = ({ tableRows }) => (
               <td style={{padding: '0.75rem', fontWeight: '600', color: row.tool === 'Prowler' ? '#ef4444' : '#8b5cf6'}}>{row.tool}</td>
               <td style={{padding: '0.75rem', fontWeight: '500'}}>{row.model}</td>
               <td style={{padding: '0.75rem'}}>
-                <span style={{background: row.decision_consistency >= 80 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)', color: row.decision_consistency >= 80 ? '#059669' : '#d97706', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold'}}>
+                <span style={{background: row.decision_consistency >= 80 ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)', color: row.decision_consistency >= 80 ? '#059669' : '#d97706', padding: '2px 6px', borderRadius: '0', fontWeight: 'bold'}}>
                   {row.decision_consistency ? `${row.decision_consistency}%` : 'N/A'}
                 </span>
               </td>
@@ -948,36 +1003,268 @@ const SlideDashboardTable = ({ tableRows }) => (
   </div>
 );
 
-const SlideConclusions = () => (
-  <div className="slide-content">
-    <h2>17. Які висновки можна зробити</h2>
-    <div className="placeholder-box">
-      <p>[Тут будуть фінальні висновки після збору більшої кількості даних. Наприклад: "GPT-4o та Claude 3.5 Sonnet демонструють найвищу стабільність (Consistency &gt; 95%), проте Prowler генерує в середньому більше файндингів, що змушує моделі витрачати більше токенів."]</p>
+const SlideInsights = () => (
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>17. Інсайти: Лідери серед LLM-моделей</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981'}}>
+          <CheckCircle2 size={20} style={{marginRight: '8px'}}/> Комерційні моделі (Paid)
+        </h3>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+          <div style={{padding: '0.75rem', background: 'rgba(16, 185, 129, 0.05)', borderLeft: '3px solid #10b981'}}>
+            <strong style={{fontSize: '0.85rem', color: '#065f46'}}>🏆 Найвища консистентність</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>GPT-4o та Claude 3.5 Sonnet — стабільні рішення у повторних запусках</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#1e40af'}}>⚡ Найкраще token/consistency</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Gemini 1.5 Flash — мінімум токенів при високій стабільності</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(139, 92, 246, 0.05)', borderLeft: '3px solid #8b5cf6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#5b21b6'}}>🎯 Збалансований adjustment rate</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Claude Sonnet 3.5 — оптимальний баланс між коригуванням та збереженням</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#f59e0b'}}>
+          <Cpu size={20} style={{marginRight: '8px'}}/> Open Source моделі
+        </h3>
+        <div style={{display: 'flex', flexDirection: 'column', gap: '0.75rem'}}>
+          <div style={{padding: '0.75rem', background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid #f59e0b'}}>
+            <strong style={{fontSize: '0.85rem', color: '#92400e'}}>🏆 Лідер Open Source</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Qwen 2.5 Coder — найкраща консистентність серед відкритих моделей</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(239, 68, 68, 0.05)', borderLeft: '3px solid #ef4444'}}>
+            <strong style={{fontSize: '0.85rem', color: '#b91c1c'}}>📉 Виклики</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Вищий рівень екстремумів та нестабільності порівняно з paid-моделями</p>
+          </div>
+          <div style={{padding: '0.75rem', background: 'rgba(20, 184, 166, 0.05)', borderLeft: '3px solid #14b8a6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#0d9488'}}>💰 Вартість / якість</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Qwen 2.5 Coder — кращий баланс token/adjustment серед open source</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 );
 
-const SlideFuture = () => (
-  <div className="slide-content">
-    <h2>18. Цінність дослідження для майбутнього</h2>
-    <div className="card">
-      <h3 style={{color: '#3b82f6'}}><Lightbulb size={24} style={{verticalAlign: 'middle', marginRight: '8px'}}/> AI Cloud Auditor (Next Steps)</h3>
-      <p>Це дослідження доводить життєздатність інтеграції LLM у конвеєр безпеки. Майбутній розвиток ідеї:</p>
-      <ul>
-        <li><strong>Інтеграція в CI/CD:</strong> Автоматичне відхилення pull-реквестів Terraform, якщо архітектурні зміни ламають компенсуючі контролі.</li>
-        <li><strong>Автоматизація SOC (SOAR):</strong> LLM може автоматично закривати тікети Security Hub як `SUPPRESSED`, якщо архітектурний контекст доводить їхню безпечність, заощаджуючи сотні годин роботи аналітиків.</li>
-        <li><strong>Генерація рекомендацій:</strong> Надання розробникам конкретних блоків Terraform-коду для виправлення вразливостей, які LLM визнала як True Positive.</li>
-      </ul>
+const SlideValue = () => (
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>18. Цінність дослідження</h2>
+    <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
+          <Lightbulb size={20} style={{marginRight: '8px'}}/> Наукова новизна та практичне значення
+        </h3>
+        <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.7', marginBottom: '1rem'}}>
+          У результаті дослідження планується отримати інсайти, що допоможуть обрати найефективніші моделі, підходи або їх комбінації для розбудови надійної системи безперервного дотримання вимог безпеки (Continuous Compliance) у хмарному середовищі.
+        </p>
+        <div style={{marginTop: 'auto', padding: '1rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
+          <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.6', margin: 0}}>
+            Інтеграція LLM у процеси комплаєнсу здатна кардинально зменшити навантаження на людей, автоматизувати ручну обробку масивів вхідних даних та перебрати на себе рутинні завдання аудиту.
+          </p>
+        </div>
+      </div>
+
+      <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#10b981'}}>
+          <TrendingUp size={20} style={{marginRight: '8px'}}/> Мультиплікатор сил
+        </h3>
+        <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.7'}}>
+          Це дослідження пропонує перехід від парадигми періодичних перевірок до проактивного, постійного процесу, здатного в будь-який момент часу надати актуальну картину стану захищеності та відповідності галузевому профілю, що можливо лише за допомогою надійної переоцінки ризиків із використанням LLM.
+        </p>
+        <div style={{marginTop: 'auto', padding: '1rem', background: 'rgba(16, 185, 129, 0.05)', borderLeft: '3px solid #10b981'}}>
+          <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.6', margin: 0}}>
+            В умовах дефіциту кадрів та високих ризиків для критичної інфраструктури, такий підхід стане дієвим мультиплікатором сил для команд кібербезпеки.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 );
 
-const SlideThankYou = () => (
-  <div className="slide-content" style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center'}}>
-    <h1 style={{fontSize: '4rem', color: 'var(--accent-blue)', marginBottom: '1rem'}}>Дякую за увагу!</h1>
-    <p style={{fontSize: '1.5rem', color: '#64748b'}}>Готовий відповісти на ваші запитання.</p>
+const SlideAppendix = () => (
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
+    <h2>19. Додаток: Jupyter Notebook</h2>
+    <div style={{flexGrow: 1, border: '1px solid #e2e8f0', overflow: 'hidden', background: '#fff', marginTop: '1rem'}}>
+      <iframe src="/results_analysis.html" width="100%" height="100%" style={{border: 'none'}} title="Results Analysis Notebook"></iframe>
+    </div>
   </div>
 );
+
+const SlideThankYou = () => {
+  const canvasRef = React.useRef(null);
+  const animFrameRef = React.useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h;
+
+    const resize = () => {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      w = canvas.width = rect.width * window.devicePixelRatio;
+      h = canvas.height = rect.height * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const particleCount = 60;
+    const particles = [];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * (w / window.devicePixelRatio),
+        y: Math.random() * (h / window.devicePixelRatio),
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+        pulse: Math.random() * Math.PI * 2,
+        type: Math.random() > 0.7 ? 'accent' : 'normal',
+      });
+    }
+
+    const hexSize = 40;
+    const hexPoints = [];
+    const realW = w / window.devicePixelRatio;
+    const realH = h / window.devicePixelRatio;
+    for (let row = -1; row < realH / (hexSize * 1.5) + 1; row++) {
+      for (let col = -1; col < realW / (hexSize * Math.sqrt(3)) + 1; col++) {
+        const cx = col * hexSize * Math.sqrt(3) + (row % 2) * hexSize * Math.sqrt(3) / 2;
+        const cy = row * hexSize * 1.5;
+        hexPoints.push({ x: cx, y: cy, phase: Math.random() * Math.PI * 2 });
+      }
+    }
+
+    let t = 0;
+    const draw = () => {
+      const rW = w / window.devicePixelRatio;
+      const rH = h / window.devicePixelRatio;
+      ctx.clearRect(0, 0, rW, rH);
+      t += 0.008;
+
+      ctx.lineWidth = 0.5;
+      hexPoints.forEach(hp => {
+        const pulse = Math.sin(t * 0.5 + hp.phase) * 0.02 + 0.04;
+        ctx.strokeStyle = `rgba(59, 130, 246, ${pulse})`;
+        ctx.beginPath();
+        for (let k = 0; k < 6; k++) {
+          const angle = Math.PI / 3 * k - Math.PI / 6;
+          const px = hp.x + hexSize * 0.5 * Math.cos(angle);
+          const py = hp.y + hexSize * 0.5 * Math.sin(angle);
+          k === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+        ctx.stroke();
+      });
+
+      const connectionDist = 110;
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.pulse += 0.02;
+        if (p.x < -10) p.x = rW + 10;
+        if (p.x > rW + 10) p.x = -10;
+        if (p.y < -10) p.y = rH + 10;
+        if (p.y > rH + 10) p.y = -10;
+      });
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDist) {
+            ctx.strokeStyle = `rgba(59, 130, 246, ${(1 - dist / connectionDist) * 0.1})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      particles.forEach(p => {
+        const glow = Math.sin(p.pulse) * 0.3 + 0.7;
+        const isAccent = p.type === 'accent';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * glow, 0, Math.PI * 2);
+        ctx.fillStyle = isAccent ? `rgba(99, 102, 241, ${0.5 * glow})` : `rgba(59, 130, 246, ${0.25 * glow})`;
+        ctx.fill();
+      });
+
+      animFrameRef.current = requestAnimationFrame(draw);
+    };
+    animFrameRef.current = requestAnimationFrame(draw);
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden'}}>
+      <canvas ref={canvasRef} style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0}} />
+
+      <div style={{zIndex: 1, textAlign: 'center', position: 'relative'}}>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          style={{ width: '320px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent)', margin: '0 auto 2rem' }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <h1 style={{fontSize: '3.5rem', fontWeight: '800', color: '#0f172a', marginBottom: '0.75rem', letterSpacing: '-0.04em', lineHeight: 1.1}}>
+            Дякую за увагу!
+          </h1>
+          <p style={{fontSize: '1.15rem', color: '#64748b', maxWidth: '500px', margin: '0 auto', lineHeight: '1.6'}}>
+            Допоможу виправити вашу хмарну безпеку
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, ease: 'easeOut', delay: 0.6 }}
+          style={{ width: '320px', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.4), transparent)', margin: '2rem auto 0' }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          style={{ marginTop: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+        >
+          <div style={{fontSize: '0.85rem', color: '#94a3b8', letterSpacing: '0.05em'}}>
+            Dmytro Vorotyntsev
+          </div>
+          <a href="https://www.linkedin.com/in/dmytro-vorotyntsev/" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
+            <img
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent('https://www.linkedin.com/in/dmytro-vorotyntsev/')}&bgcolor=ffffff&color=334155&margin=0`}
+              alt="LinkedIn QR"
+              style={{width: '120px', height: '120px', border: '1px solid #e2e8f0', borderRadius: '0'}}
+            />
+          </a>
+          <div style={{fontSize: '0.75rem', color: '#94a3b8'}}>LinkedIn</div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
 
 // --- Main Presentation Component ---
 
@@ -1060,12 +1347,13 @@ function App() {
     <SlideAnalysisPhases key={11} />,
     <SlideResponse key={12} />,
     <SlideQualityCheck key={13} />,
-    <SlideCalculations key={14} />,
+    <SlideMetrics key={14} />,
     <SlideDashboardCharts key={15} chartData={chartData} />,
     <SlideDashboardTable key={16} tableRows={tableRows} />,
-    <SlideConclusions key={17} />,
-    <SlideFuture key={18} />,
-    <SlideThankYou key={19} />
+    <SlideInsights key={17} />,
+    <SlideValue key={18} />,
+    <SlideAppendix key={19} />,
+    <SlideThankYou key={20} />
   ];
 
   const totalSlides = slides.length;
@@ -1097,7 +1385,7 @@ function App() {
   return (
     <div className="dashboard-container" style={{height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden'}}>
       <header style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, marginBottom: '1rem'}}>
-        <div style={{display: 'flex', alignItems: 'center', gap: '1rem', opacity: currentSlide === 0 ? 0 : 1, transition: 'opacity 0.3s ease'}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '1rem', opacity: (currentSlide === 0 || currentSlide === totalSlides - 1) ? 0 : 1, transition: 'opacity 0.3s ease'}}>
           <div className="logo-icon">
             <ShieldAlert color="#fff" size={24} />
           </div>

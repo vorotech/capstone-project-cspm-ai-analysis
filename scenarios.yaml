@@ -51,7 +51,6 @@ scenarios:
       - data/ecc-aws-rulepack/terraform/ecc-aws-043-s3_bucket_lifecycle/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-053-cloudtrail_log_validation_enabled/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-059-config_enabled_all_regions/red
-      - data/ecc-aws-rulepack/terraform/ecc-aws-064-default_security_group_every_vpc_restricts_all_traffic/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-066-eks_cluster_protected_endpoint_access/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-075-elasticsearch_service_domains_encryption_at_rest/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-083-cloud_front_waf_integration/red
@@ -75,6 +74,4 @@ scenarios:
 
   - name: invalid_cleanup
     tasks:
-      - data/ecc-aws-rulepack/terraform/ecc-aws-011-http_elb_certificate_expire_in_one_month/red
-      - data/ecc-aws-rulepack/terraform/ecc-aws-055-cloudtrail_integrated_with_cloudwatch/red
-      - data/ecc-aws-rulepack/terraform/ecc-aws-065-encrypted_connection_between_cloudfront_origin/red
+      - data/ecc-aws-rulepack/terraform/ecc-aws-064-default_security_group_every_vpc_restricts_all_traffic/red

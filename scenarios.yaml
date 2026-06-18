@@ -70,8 +70,3 @@ scenarios:
       - data/ecc-aws-rulepack/terraform/ecc-aws-352-sns_encrypted_with_kms_cmk/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-501-opensearch_access_control_enabled/red
       - data/ecc-aws-rulepack/terraform/ecc-aws-566-opensearch_auto_tune_enabled/red
-
-
-  - name: invalid_cleanup
-    tasks:
-      - data/ecc-aws-rulepack/terraform/ecc-aws-064-default_security_group_every_vpc_restricts_all_traffic/red

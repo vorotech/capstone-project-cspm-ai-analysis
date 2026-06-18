@@ -812,7 +812,7 @@ const SlideResponse = () => (
               <div style={{fontWeight: 'bold', color: '#92400e', fontSize: '1.1rem'}}>MEDIUM</div>
             </div>
             
-            <div style={{width: 0, height: 0, borderTop: '15px solid transparent', borderBottom: '15px solid transparent', borderLeft: '20px solid #fef3c7'}}></div>
+            <div style={{width: 0, height: 0, borderTop: '15px solid transparent', borderBottom: '15px solid transparent', borderLeft: '20px solid #d0f7beff'}}></div>
             
             <div style={{flex: 1, padding: '1rem', background: '#dcfce3', borderRadius: '0', border: '1px solid #bbf7d0', textAlign: 'center'}}>
               <div style={{fontSize: '0.85rem', color: '#166534', marginBottom: '0.25rem'}}>Стало (LLM)</div>

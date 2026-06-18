@@ -42,8 +42,14 @@ python main.py cspm --scenario test_s3_red
 
 **3. LLM Аналіз**
 Обробляє звіти CSPM через OpenRouter для виявлення False Positives та валідації компенсуючих заходів.
+> [!NOTE]
+> Перед відправкою до LLM усі дані проходять процес **анонімізації**. 12-значні ідентифікатори AWS акаунтів замінюються на `<REDACTED>`, щоб PII/чутливі дані не перетинали межу довіри (Trust Boundary).
+
+Ви можете (і повинні) запускати цей крок **багато разів**, комбінуючи різні моделі, щоб зібрати достатньо тестових даних у `metrics_history.csv` та `findings_history.csv` без необхідності щоразу перерозгортати інфраструктуру. 
+
+Моделі можна передавати списком через кому за допомогою параметра `--models`:
 ```bash
-python main.py analyze --scenario test_s3_red
+python main.py analyze --scenario test_s3_red --models "anthropic/claude-3-haiku,openai/gpt-4o-mini"
 ```
 
 **4. Terraform Destroy**

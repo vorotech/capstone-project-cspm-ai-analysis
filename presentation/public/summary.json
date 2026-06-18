@@ -2,15 +2,168 @@
   "prowler": {
     "models_summary": [
       {
-        "model": "gemini-3.5-flash",
-        "adjustment_rate": 26.32,
-        "decision_consistency": 56.52,
-        "latency": 19.88,
-        "total_tokens": 6365,
+        "model": "llama-4-scout",
+        "adjustment_rate": 73.36,
+        "decision_consistency": 67.53,
+        "latency": 15.75,
+        "total_tokens": 9889,
         "adjustment_categories": {
-          "BUSINESS_REQUIREMENT": 14,
-          "SENSITIVE_DATA_EXPOSURE": 9,
+          "BUSINESS_REQUIREMENT": 40,
+          "COMPENSATING_CONTROL": 33,
+          "ISOLATED_ENVIRONMENT": 9,
+          "THIRD_PARTY_MANAGED": 2,
+          "CRITICAL_BUSINESS_FUNCTION": 1,
+          "ACCEPTED_RISK": 1
+        }
+      },
+      {
+        "model": "deepseek-v4-flash",
+        "adjustment_rate": 33.32,
+        "decision_consistency": 0.0,
+        "latency": 83.15,
+        "total_tokens": 15008,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 75,
+          "INCREASED_CONTEXTUAL_RISK": 42,
+          "ACCEPTED_RISK": 27,
+          "TOOL_INACCURACY": 12,
+          "CRITICAL_BUSINESS_FUNCTION": 4,
+          "TEST_RESOURCE": 1,
+          "BUSINESS_REQUIREMENT": 1,
+          "SENSITIVE_DATA_EXPOSURE": 1
+        }
+      },
+      {
+        "model": "qwen3.7-plus",
+        "adjustment_rate": 18.93,
+        "decision_consistency": 57.14,
+        "latency": 119.43,
+        "total_tokens": 16393,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 52,
+          "BUSINESS_REQUIREMENT": 19,
+          "INCREASED_CONTEXTUAL_RISK": 7,
+          "ISOLATED_ENVIRONMENT": 4,
+          "ACCEPTED_RISK": 3,
+          "TOOL_INACCURACY": 2,
+          "SENSITIVE_DATA_EXPOSURE": 1,
           "THIRD_PARTY_MANAGED": 1
+        }
+      },
+      {
+        "model": "gemma-4-31b-it",
+        "adjustment_rate": 16.65,
+        "decision_consistency": 87.01,
+        "latency": 61.9,
+        "total_tokens": 11696,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 58,
+          "SENSITIVE_DATA_EXPOSURE": 9,
+          "TOOL_INACCURACY": 1
+        }
+      },
+      {
+        "model": "glm-5.1",
+        "adjustment_rate": 42.45,
+        "decision_consistency": 48.05,
+        "latency": 167.92,
+        "total_tokens": 15914,
+        "adjustment_categories": {
+          "INCREASED_CONTEXTUAL_RISK": 38,
+          "COMPENSATING_CONTROL": 35,
+          "SENSITIVE_DATA_EXPOSURE": 29,
+          "CRITICAL_BUSINESS_FUNCTION": 13,
+          "ACCEPTED_RISK": 8,
+          "PUBLICLY_EXPOSED_ASSET": 1,
+          "THIRD_PARTY_MANAGED": 1,
+          "BUSINESS_REQUIREMENT": 1
+        }
+      },
+      {
+        "model": "claude-sonnet-4.6",
+        "adjustment_rate": 71.42,
+        "decision_consistency": 50.65,
+        "latency": 73.86,
+        "total_tokens": 15965,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 85,
+          "INCREASED_CONTEXTUAL_RISK": 79,
+          "SENSITIVE_DATA_EXPOSURE": 64,
+          "CRITICAL_BUSINESS_FUNCTION": 25,
+          "THIRD_PARTY_MANAGED": 8,
+          "PUBLICLY_EXPOSED_ASSET": 2,
+          "ACCEPTED_RISK": 2,
+          "TOOL_INACCURACY": 2
+        }
+      },
+      {
+        "model": "claude-haiku-4.5",
+        "adjustment_rate": 63.55,
+        "decision_consistency": 54.55,
+        "latency": 28.95,
+        "total_tokens": 16648,
+        "adjustment_categories": {
+          "INCREASED_CONTEXTUAL_RISK": 237,
+          "COMPENSATING_CONTROL": 50
+        }
+      },
+      {
+        "model": "gpt-5-mini",
+        "adjustment_rate": 57.52,
+        "decision_consistency": 40.26,
+        "latency": 51.01,
+        "total_tokens": 13933,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 81,
+          "BUSINESS_REQUIREMENT": 30,
+          "ACCEPTED_RISK": 11,
+          "INCREASED_CONTEXTUAL_RISK": 8,
+          "ISOLATED_ENVIRONMENT": 5,
+          "THIRD_PARTY_MANAGED": 3,
+          "TEST_RESOURCE": 1
+        }
+      },
+      {
+        "model": "gpt-4o-mini",
+        "adjustment_rate": 35.66,
+        "decision_consistency": 88.31,
+        "latency": 31.98,
+        "total_tokens": 10339,
+        "adjustment_categories": {
+          "PUBLICLY_EXPOSED_ASSET": 50,
+          "INCREASED_CONTEXTUAL_RISK": 44,
+          "SENSITIVE_DATA_EXPOSURE": 40,
+          "ACCEPTED_RISK": 12
+        }
+      },
+      {
+        "model": "gemini-3.1-pro-preview",
+        "adjustment_rate": 28.85,
+        "decision_consistency": 80.52,
+        "latency": 57.88,
+        "total_tokens": 16660,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 70,
+          "BUSINESS_REQUIREMENT": 8,
+          "SENSITIVE_DATA_EXPOSURE": 5,
+          "CRITICAL_BUSINESS_FUNCTION": 3,
+          "INCREASED_CONTEXTUAL_RISK": 3
+        }
+      },
+      {
+        "model": "gemini-3.5-flash",
+        "adjustment_rate": 24.65,
+        "decision_consistency": 81.82,
+        "latency": 28.94,
+        "total_tokens": 15776,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 35,
+          "CRITICAL_BUSINESS_FUNCTION": 12,
+          "SENSITIVE_DATA_EXPOSURE": 9,
+          "THIRD_PARTY_MANAGED": 5,
+          "ISOLATED_ENVIRONMENT": 5,
+          "INCREASED_CONTEXTUAL_RISK": 2,
+          "BUSINESS_REQUIREMENT": 2
         }
       }
     ]
@@ -18,40 +171,169 @@
   "securityhub": {
     "models_summary": [
       {
-        "model": "gemini-3.5-flash",
-        "adjustment_rate": 30.44,
-        "decision_consistency": 56.36,
-        "latency": 35.14,
-        "total_tokens": 14901,
+        "model": "llama-4-scout",
+        "adjustment_rate": 26.86,
+        "decision_consistency": 93.85,
+        "latency": 12.17,
+        "total_tokens": 24132,
         "adjustment_categories": {
-          "BUSINESS_REQUIREMENT": 48,
-          "COMPENSATING_CONTROL": 45,
-          "ACCEPTED_RISK": 31,
-          "TOOL_INACCURACY": 6
+          "COMPENSATING_CONTROL": 29,
+          "BUSINESS_REQUIREMENT": 13,
+          "ISOLATED_ENVIRONMENT": 12
         }
       },
       {
-        "model": "kimi-k2.7-code",
-        "adjustment_rate": 50.83,
-        "decision_consistency": 34.15,
-        "latency": 270.01,
-        "total_tokens": 18513,
+        "model": "deepseek-v4-flash",
+        "adjustment_rate": 41.49,
+        "decision_consistency": 0.0,
+        "latency": 165.74,
+        "total_tokens": 38578,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 15,
-          "BUSINESS_REQUIREMENT": 15,
-          "ACCEPTED_RISK": 9
+          "COMPENSATING_CONTROL": 273,
+          "ACCEPTED_RISK": 249,
+          "BUSINESS_REQUIREMENT": 83,
+          "TOOL_INACCURACY": 43,
+          "ISOLATED_ENVIRONMENT": 8,
+          "SENSITIVE_DATA_EXPOSURE": 8,
+          "INCREASED_CONTEXTUAL_RISK": 6,
+          "PUBLICLY_EXPOSED_ASSET": 3,
+          "CRITICAL_BUSINESS_FUNCTION": 2
         }
       },
       {
-        "model": "minimax-m3",
-        "adjustment_rate": 19.16,
-        "decision_consistency": 78.05,
-        "latency": 122.9,
-        "total_tokens": 13849,
+        "model": "qwen3.7-plus",
+        "adjustment_rate": 26.6,
+        "decision_consistency": 62.57,
+        "latency": 200.92,
+        "total_tokens": 37140,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 6,
-          "BUSINESS_REQUIREMENT": 6,
+          "COMPENSATING_CONTROL": 213,
+          "BUSINESS_REQUIREMENT": 69,
+          "ISOLATED_ENVIRONMENT": 24,
+          "THIRD_PARTY_MANAGED": 23,
+          "TOOL_INACCURACY": 11,
+          "ACCEPTED_RISK": 5,
+          "TEST_RESOURCE": 2
+        }
+      },
+      {
+        "model": "gemma-4-31b-it",
+        "adjustment_rate": 14.89,
+        "decision_consistency": 95.53,
+        "latency": 68.46,
+        "total_tokens": 28065,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 58,
+          "BUSINESS_REQUIREMENT": 19,
+          "ISOLATED_ENVIRONMENT": 3,
+          "ACCEPTED_RISK": 1
+        }
+      },
+      {
+        "model": "glm-5.1",
+        "adjustment_rate": 28.72,
+        "decision_consistency": 50.84,
+        "latency": 246.27,
+        "total_tokens": 36145,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 124,
+          "ACCEPTED_RISK": 69,
+          "BUSINESS_REQUIREMENT": 42,
+          "TOOL_INACCURACY": 32,
+          "SENSITIVE_DATA_EXPOSURE": 6,
+          "INCREASED_CONTEXTUAL_RISK": 5,
+          "CRITICAL_BUSINESS_FUNCTION": 4,
+          "PUBLICLY_EXPOSED_ASSET": 4,
+          "ISOLATED_ENVIRONMENT": 2
+        }
+      },
+      {
+        "model": "claude-sonnet-4.6",
+        "adjustment_rate": 58.09,
+        "decision_consistency": 52.51,
+        "latency": 111.69,
+        "total_tokens": 36830,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 143,
+          "SENSITIVE_DATA_EXPOSURE": 96,
+          "INCREASED_CONTEXTUAL_RISK": 85,
+          "ACCEPTED_RISK": 68,
+          "BUSINESS_REQUIREMENT": 55,
+          "CRITICAL_BUSINESS_FUNCTION": 23,
+          "PUBLICLY_EXPOSED_ASSET": 7,
+          "TOOL_INACCURACY": 5,
+          "THIRD_PARTY_MANAGED": 3
+        }
+      },
+      {
+        "model": "claude-haiku-4.5",
+        "adjustment_rate": 25.42,
+        "decision_consistency": 46.93,
+        "latency": 23.61,
+        "total_tokens": 32397,
+        "adjustment_categories": {
+          "ACCEPTED_RISK": 80,
+          "COMPENSATING_CONTROL": 58,
+          "BUSINESS_REQUIREMENT": 35,
+          "TOOL_INACCURACY": 16,
+          "CRITICAL_BUSINESS_FUNCTION": 5
+        }
+      },
+      {
+        "model": "gpt-5-mini",
+        "adjustment_rate": 22.98,
+        "decision_consistency": 87.71,
+        "latency": 38.68,
+        "total_tokens": 27624,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 47,
+          "TOOL_INACCURACY": 27,
+          "BUSINESS_REQUIREMENT": 10,
+          "ISOLATED_ENVIRONMENT": 8,
           "ACCEPTED_RISK": 3
+        }
+      },
+      {
+        "model": "gpt-4o-mini",
+        "adjustment_rate": 25.43,
+        "decision_consistency": 93.3,
+        "latency": 17.55,
+        "total_tokens": 25107,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 121
+        }
+      },
+      {
+        "model": "gemini-3.1-pro-preview",
+        "adjustment_rate": 26.7,
+        "decision_consistency": 66.48,
+        "latency": 94.81,
+        "total_tokens": 39733,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 224,
+          "BUSINESS_REQUIREMENT": 75,
+          "SENSITIVE_DATA_EXPOSURE": 18,
+          "CRITICAL_BUSINESS_FUNCTION": 4,
+          "TOOL_INACCURACY": 4,
+          "INCREASED_CONTEXTUAL_RISK": 3,
+          "ISOLATED_ENVIRONMENT": 2
+        }
+      },
+      {
+        "model": "gemini-3.5-flash",
+        "adjustment_rate": 21.49,
+        "decision_consistency": 88.83,
+        "latency": 37.17,
+        "total_tokens": 34061,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 45,
+          "TOOL_INACCURACY": 16,
+          "BUSINESS_REQUIREMENT": 15,
+          "ISOLATED_ENVIRONMENT": 10,
+          "SENSITIVE_DATA_EXPOSURE": 5,
+          "ACCEPTED_RISK": 2,
+          "CRITICAL_BUSINESS_FUNCTION": 2,
+          "INCREASED_CONTEXTUAL_RISK": 1
         }
       }
     ]

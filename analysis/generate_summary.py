@@ -1,8 +1,23 @@
 import pandas as pd
 import json
 
-metrics_df = pd.read_csv("output/analysis/metrics_history.csv")
-findings_df = pd.read_csv("output/analysis/findings_history.csv")
+import argparse
+import os
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--scenario", required=True, help="Scenario name")
+args = parser.parse_args()
+
+metrics_path = f"output/analysis/{args.scenario}/metrics_history.csv"
+findings_path = f"output/analysis/{args.scenario}/findings_history.csv"
+
+if os.path.exists(metrics_path) and os.path.exists(findings_path):
+    metrics_df = pd.read_csv(metrics_path)
+    findings_df = pd.read_csv(findings_path)
+else:
+    print(f"Warning: CSV files not found for scenario {args.scenario}")
+    metrics_df = pd.DataFrame()
+    findings_df = pd.DataFrame()
 
 def calculate_summary(m_df, f_df):
     summary = {}

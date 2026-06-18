@@ -40,7 +40,15 @@ python main.py apply --scenario test_s3_red
 python main.py cspm --scenario test_s3_red
 ```
 
-**3. LLM Аналіз**
+**3. Terraform Destroy**
+Знищує всі розгорнуті ресурси згідно зі сценарієм. 
+> [!TIP]
+> Виконуйте цей крок **одразу після збору результатів (Крок 2)**. Оскільки всі наступні етапи (робота LLM) аналізують вже збережені локально файли, вам не потрібно тримати інфраструктуру AWS активною. Це збереже ваші кошти!
+```bash
+python main.py destroy --scenario test_s3_red
+```
+
+**4. LLM Аналіз**
 Обробляє звіти CSPM через OpenRouter для виявлення False Positives та валідації компенсуючих заходів.
 > [!NOTE]
 > Перед відправкою до LLM усі дані проходять процес **анонімізації**. 12-значні ідентифікатори AWS акаунтів замінюються на `<REDACTED>`, щоб PII/чутливі дані не перетинали межу довіри (Trust Boundary).
@@ -51,14 +59,6 @@ python main.py cspm --scenario test_s3_red
 Крім того, ви можете використати параметр `--iterations N`, щоб скрипт автоматично виконав вказану кількість прогонів поспіль для збору більшої кількості статистики:
 ```bash
 python main.py analyze --scenario test_s3_red --models "anthropic/claude-3-haiku,openai/gpt-4o-mini" --iterations 5
-```
-
-**4. Terraform Destroy**
-Знищує всі розгорнуті ресурси згідно зі сценарієм. 
-> [!WARNING]
-> Важливо не забувати цей крок при покроковому запуску, щоб уникнути зайвих витрат в AWS!
-```bash
-python main.py destroy --scenario test_s3_red
 ```
 
 ### Глобальні параметри

@@ -173,8 +173,12 @@ class CSPMParser:
         return findings
 
 if __name__ == "__main__":
-    import sys
-    parser = CSPMParser()
-    scenario = "test_s3_red" if len(sys.argv) < 2 else sys.argv[1]
-    res = parser.parse_all(scenario)
+    import argparse
+    
+    parser = argparse.ArgumentParser(description="Parse CSPM results.")
+    parser.add_argument("--scenario", required=True, help="Name of the scenario to parse")
+    args = parser.parse_args()
+    
+    cspm_parser = CSPMParser()
+    res = cspm_parser.parse_all(args.scenario)
     print(json.dumps(res, indent=2))

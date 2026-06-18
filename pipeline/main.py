@@ -26,15 +26,29 @@ def run_cspm(args):
 
 from llm_analyzer import LLMAnalyzer
 
-def run_report(args=None):
-    """Generates the HTML report from the Jupyter Notebook."""
-    console.print("\n[bold yellow]--- Generating HTML Report ---[/bold yellow]")
+def run_report(args):
+    """Generates the HTML report from the Jupyter Notebook and the summary JSON."""
+    scenario = args.scenario
+    console.print(f"\n[bold yellow]--- Generating Reports for Scenario: {scenario} ---[/bold yellow]")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     notebook_path = os.path.join(base_dir, "analysis", "results_analysis.ipynb")
     public_dir = os.path.join(base_dir, "presentation", "public")
+    
     try:
-        subprocess.run(["jupyter", "nbconvert", "--to", "html", "--execute", notebook_path, "--output-dir", public_dir], check=True, cwd=base_dir)
-        console.print("[bold green]Success: Report generated directly at presentation/public/results_analysis.html[/bold green]")
+        # Save current scenario to a file so notebook can read it without env vars
+        scenario_file_path = os.path.join(base_dir, "output", "analysis", ".current_scenario")
+        with open(scenario_file_path, "w") as f:
+            f.write(scenario)
+            
+        # Run generate_summary.py
+        console.print("[dim]Updating summary.json...[/dim]")
+        subprocess.run([sys.executable, "analysis/generate_summary.py", "--scenario", scenario], check=True, cwd=base_dir)
+        
+        # Run Jupyter Notebook
+        console.print("[dim]Executing Jupyter Notebook...[/dim]")
+        subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "html", "--execute", notebook_path, "--output-dir", public_dir], check=True, cwd=base_dir)
+        
+        console.print("[bold green]Success: Reports generated successfully[/bold green]")
     except Exception as e:
         console.print(f"[bold red]Error generating report:[/bold red] {e}")
 
@@ -42,7 +56,7 @@ def run_analyze(args):
     """Executes the LLM analysis phase."""
     console.print(f"\n[bold yellow]--- Running LLM Analysis for Scenario: {args.scenario} (Iterations: {args.iterations}) ---[/bold yellow]")
     if not args.models:
-        console.print("[red]Error: You must provide at least one model via --models (e.g. --models local/gemma-4-12b,anthropic/claude-3-haiku) for analyze command.[/red]")
+        console.print("[red]Error: You must provide at least one model via --models (e.g. --models local/gemma-4-12b,anthropic/claude-haiku-4.5) for analyze command.[/red]")
         sys.exit(1)
         
     analyzer = LLMAnalyzer(scenarios_file=args.scenarios_file)
@@ -92,7 +106,7 @@ def main():
     
     # Subcommand: analyze
     parser_analyze = subparsers.add_parser("analyze", parents=[parent_parser, scenario_parser], help="Run LLM analysis on CSPM results")
-    parser_analyze.add_argument("--models", help="Comma separated list of models, e.g. local/gemma-4-12b,anthropic/claude-3-haiku")
+    parser_analyze.add_argument("--models", help="Comma separated list of models, e.g. local/gemma-4-12b,anthropic/claude-haiku-4.5")
     parser_analyze.add_argument("--iterations", type=int, default=1, help="Number of times to run the analysis loop (default: 1)")
     parser_analyze.set_defaults(func=run_analyze)
     
@@ -102,7 +116,7 @@ def main():
     
 
     # Subcommand: report
-    parser_report = subparsers.add_parser("report", parents=[parent_parser], help="Generate HTML report from Jupyter Notebook")
+    parser_report = subparsers.add_parser("report", parents=[parent_parser, scenario_parser], help="Generate HTML report from Jupyter Notebook")
     parser_report.set_defaults(func=run_report)
     
     args = parser.parse_args()

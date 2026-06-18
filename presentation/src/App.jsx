@@ -452,7 +452,7 @@ const SlideConstraints = () => (
       <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
         <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem'}}><Cpu size={24} color="#3b82f6" style={{marginRight: '12px'}}/> Топові моделі</h3>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
-          {['anthropic/claude-sonnet-4.6', 'anthropic/claude-haiku-4.5', 'anthropic/claude-3.5-haiku', 'openai/gpt-5-mini', 'openai/gpt-4o-mini', 'google/gemini-3.1-pro-preview', 'google/gemini-3.5-flash'].map(model => (
+          {['anthropic/claude-sonnet-4.6', 'anthropic/claude-haiku-4.5', 'openai/gpt-5-mini', 'openai/gpt-4o-mini', 'google/gemini-3.1-pro-preview', 'google/gemini-3.5-flash'].map(model => (
             <span key={model} style={{padding: '6px 12px', background: 'rgba(59, 130, 246, 0.08)', color: '#2563eb', fontSize: '0.85rem', fontWeight: '500', border: '1px solid rgba(59, 130, 246, 0.2)'}}>
               {model}
             </span>
@@ -463,7 +463,7 @@ const SlideConstraints = () => (
       <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
         <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem'}}><Cpu size={24} color="#10b981" style={{marginRight: '12px'}}/> Open Source</h3>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
-          {['meta-llama/llama-4-scout', 'deepseek/deepseek-v4-flash', 'qwen/qwen3.7-plus', 'google/gemma-4-31b-it', 'microsoft/phi-4', 'mistralai/mistral-small-2603', 'nvidia/nemotron-3-super-120b-a12b', 'z-ai/glm-5.1', 'moonshotai/kimi-k2.6'].map(model => (
+          {['meta-llama/llama-4-scout', 'deepseek/deepseek-v4-flash', 'qwen/qwen3.7-plus', 'google/gemma-4-31b-it', 'z-ai/glm-5.1', 'moonshotai/kimi-k2.7-code'].map(model => (
             <span key={model} style={{padding: '6px 12px', background: 'rgba(16, 185, 129, 0.08)', color: '#059669', fontSize: '0.85rem', fontWeight: '500', border: '1px solid rgba(16, 185, 129, 0.2)'}}>
               {model}
             </span>
@@ -472,7 +472,7 @@ const SlideConstraints = () => (
       </div>
 
       <div className="card" style={{gridColumn: '1 / -1'}}>
-        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem'}}><ShieldAlert size={24} color="#f59e0b" style={{marginRight: '12px'}}/>Технологічний стек</h3>
+        <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem'}}><ShieldAlert size={24} color="#f59e0b" style={{marginRight: '12px'}}/>Технічні параметри</h3>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '2rem'}}>
           <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
             <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>Хмара</span>
@@ -489,6 +489,18 @@ const SlideConstraints = () => (
           <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
             <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>CSPM</span>
             <span style={{fontWeight: '600'}}>Prowler, AWS Security Hub</span>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
+            <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>LLM API</span>
+            <span style={{fontWeight: '600'}}>OpenRouter</span>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
+            <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>Температура</span>
+            <span style={{fontWeight: '600'}}>0.1</span>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
+            <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>Ітерації</span>
+            <span style={{fontWeight: '600'}}>10</span>
           </div>
         </div>
       </div>

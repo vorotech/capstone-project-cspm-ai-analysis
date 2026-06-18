@@ -23,13 +23,8 @@ class LLMAnalyzer:
             self.scenarios_file = scenarios_file
             
         self.prompts_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "prompts")
-        self.output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output", "analysis")
-        
-        # Ensure output directory exists for CSV files
-        os.makedirs(self.output_dir, exist_ok=True)
-        self.metrics_csv_path = os.path.join(self.output_dir, "metrics_history.csv")
-        self.findings_csv_path = os.path.join(self.output_dir, "findings_history.csv")
-        self._init_csv_files()
+        # Output directory will be scoped by scenario
+        self.output_base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "output", "analysis")
 
     def _init_csv_files(self):
         """Initializes the CSV files with headers if they don't exist."""
@@ -143,6 +138,14 @@ class LLMAnalyzer:
         return "other"
 
     def run_analysis(self, scenario_name: str, models: List[str]):
+        """Runs the LLM analysis against the results of the given scenario for multiple models."""
+        # Initialize paths per scenario
+        self.output_dir = os.path.join(self.output_base_dir, scenario_name)
+        os.makedirs(self.output_dir, exist_ok=True)
+        self.metrics_csv_path = os.path.join(self.output_dir, "metrics_history.csv")
+        self.findings_csv_path = os.path.join(self.output_dir, "findings_history.csv")
+        self._init_csv_files()
+
         config = self._get_scenario_config(scenario_name)
         if not config:
             return
@@ -202,7 +205,12 @@ class LLMAnalyzer:
                 
                 analyzed_findings = response_json.get("findings_analysis", [])
                 
-                if not metrics.get("parsing_success"):
+                if not isinstance(analyzed_findings, list):
+                    console.print(f"[red]Invalid JSON structure: 'findings_analysis' should be a list, got {type(analyzed_findings).__name__}. Marking attempt as invalid.[/red]")
+                    metrics["parsing_success"] = False
+                    metrics["error_type"] = "API_ERROR"
+                    analyzed_findings = []
+                elif not metrics.get("parsing_success"):
                     console.print(f"[red]Failed to parse JSON response for {model} on {tool}. Marking attempt as invalid.[/red]")
                     analyzed_findings = []
                 else:
@@ -249,7 +257,7 @@ class LLMAnalyzer:
                         metrics["error_type"] = "ALL_ADJUSTED"
                 
                 # Save raw results
-                out_dir = os.path.join(self.output_dir, scenario_name, model_slug, tool, run_id)
+                out_dir = os.path.join(self.output_dir, model_slug, tool, run_id)
                 os.makedirs(out_dir, exist_ok=True)
                 
                 with open(os.path.join(out_dir, "report.json"), "w", encoding="utf-8") as f:

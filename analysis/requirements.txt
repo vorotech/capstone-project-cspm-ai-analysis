@@ -3,3 +3,4 @@ matplotlib
 seaborn
 jupyterlab
 nbconvert
+scipy

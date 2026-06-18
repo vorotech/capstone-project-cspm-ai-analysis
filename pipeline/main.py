@@ -44,10 +44,13 @@ def run_report(args):
         console.print("[dim]Updating summary.json...[/dim]")
         subprocess.run([sys.executable, "analysis/generate_summary.py", "--scenario", scenario], check=True, cwd=base_dir)
         
-        # Run Jupyter Notebook
-        console.print("[dim]Executing Jupyter Notebook...[/dim]")
-        subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "html", "--execute", notebook_path, "--output-dir", public_dir], check=True, cwd=base_dir)
+        # Run Jupyter Notebook and save outputs inplace
+        console.print("[dim]Executing Jupyter Notebook (updating inplace)...[/dim]")
+        subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "notebook", "--execute", "--inplace", notebook_path], check=True, cwd=base_dir)
         
+        # Export to HTML
+        console.print("[dim]Exporting Notebook to HTML...[/dim]")
+        subprocess.run([sys.executable, "-m", "jupyter", "nbconvert", "--to", "html", notebook_path, "--output-dir", public_dir], check=True, cwd=base_dir)
         console.print("[bold green]Success: Reports generated successfully[/bold green]")
     except Exception as e:
         console.print(f"[bold red]Error generating report:[/bold red] {e}")
@@ -68,7 +71,7 @@ def run_analyze(args):
         analyzer.run_analysis(args.scenario, models_list)
     
     # Automatically generate report after analysis
-    run_report()
+    run_report(args)
 
 def run_destroy(args):
     """Executes the Terraform destroy phase."""

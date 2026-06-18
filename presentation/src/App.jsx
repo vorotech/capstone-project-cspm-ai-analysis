@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend
+  ComposedChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend, ReferenceLine
 } from 'recharts';
 import { ChevronLeft, ChevronRight, ShieldAlert, Cpu, Network, FileJson, CheckCircle2, AlertTriangle, Lightbulb, Maximize, User, Folder, FileText, Terminal, HelpCircle, Brain, TrendingUp, EyeOff, Cloud } from 'lucide-react';
 import './App.css'; // Just for standard imports if needed, though most styling is inline/index.css
@@ -415,7 +415,7 @@ const SlideHypothesis = () => (
           <TrendingUp size={28} style={{marginRight: '12px'}}/> 1. Консистентність рішень
         </h3>
         <p style={{fontSize: '1rem', color: '#475569', lineHeight: '1.7'}}>
-          Моделі з великим контекстним вікном і високими показниками <strong>Reasoning</strong> зможуть досягти <span style={{color: '#2563eb', fontWeight: '700'}}>Decision Consistency &gt; 85%</span> при аналізі архітектурного контексту.
+          Моделі з великим контекстним вікном і високими показниками <strong>Reasoning</strong> зможуть досягти <span style={{color: '#2563eb', fontWeight: '700'}}>Decision Consistency &gt; 80%</span> при аналізі архітектурного контексту.
         </p>
         <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(59, 130, 246, 0.08)', borderLeft: '4px solid #3b82f6', borderRadius: '0'}}>
           <p style={{margin: 0, color: '#1d4ed8', fontWeight: '500', lineHeight: '1.6'}}>
@@ -463,7 +463,7 @@ const SlideConstraints = () => (
       <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
         <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1.5rem'}}><Cpu size={24} color="#10b981" style={{marginRight: '12px'}}/> Open Source</h3>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: '10px'}}>
-          {['meta-llama/llama-4-scout', 'deepseek/deepseek-v4-flash', 'qwen/qwen3.7-plus', 'google/gemma-4-31b-it', 'z-ai/glm-5.1', 'moonshotai/kimi-k2.7-code'].map(model => (
+          {['meta-llama/llama-4-scout', 'deepseek/deepseek-v4-flash', 'qwen/qwen3.7-plus', 'google/gemma-4-31b-it', 'z-ai/glm-5.1', 'moonshotai/kimi-k2.7-code', 'xiaomi/mimo-v2.5-pro'].map(model => (
             <span key={model} style={{padding: '6px 12px', background: 'rgba(16, 185, 129, 0.08)', color: '#059669', fontSize: '0.85rem', fontWeight: '500', border: '1px solid rgba(16, 185, 129, 0.2)'}}>
               {model}
             </span>
@@ -850,7 +850,9 @@ const SlideResponse = () => (
   </div>
 );
 
-const SlideQualityCheck = () => (
+const SlideQualityCheck = () => {
+  const [selectedImg, setSelectedImg] = useState(null);
+  return (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>13. Етап 1: Оцінка якості</h2>
     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
@@ -876,14 +878,29 @@ const SlideQualityCheck = () => (
           </div>
         </div>
       </div>
-      <div style={{background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <div style={{background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/1_filter_out_results_below_threshold.png')}>
         <img src="/1_filter_out_results_below_threshold.png" alt="Оцінка якості" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
       </div>
     </div>
-  </div>
-);
 
-const SlideMetrics = () => (
+    {/* Fullscreen Modal Overlay */}
+    <AnimatePresence>
+      {selectedImg && (
+        <motion.div 
+          initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}
+          style={{position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}} 
+          onClick={() => setSelectedImg(null)}
+        >
+          <img src={selectedImg} style={{maxWidth: '95%', maxHeight: '95%', objectFit: 'contain', background: 'white', padding: '1rem', borderRadius: '8px'}} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </div>
+)};
+
+const SlideMetrics = () => {
+  const [selectedImg, setSelectedImg] = useState(null);
+  return (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>14. Етап 2: Розрахунок метрик</h2>
     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
@@ -894,17 +911,13 @@ const SlideMetrics = () => (
           <TrendingUp size={20} style={{marginRight: '8px'}}/> Оцінювані метрики
         </h3>
         <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', flexGrow: 1}}>
-          <div style={{padding: '0.75rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
-            <strong style={{fontSize: '0.85rem', color: '#1e40af'}}>Adjustment Rate (%)</strong>
-            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Відсоток знахідок CSPM, для яких LLM змінила критичність або позначила їх як False Positive.</p>
-          </div>
           <div style={{padding: '0.75rem', background: 'rgba(16, 185, 129, 0.05)', borderLeft: '3px solid #10b981'}}>
             <strong style={{fontSize: '0.85rem', color: '#065f46'}}>Decision Consistency (%)</strong>
             <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Стабільність рішень моделі. Показує, наскільки часто модель для однієї і тієї ж знахідки (в різних запусках) повертає ідентичну оцінку.</p>
           </div>
-          <div style={{padding: '0.75rem', background: 'rgba(139, 92, 246, 0.05)', borderLeft: '3px solid #8b5cf6'}}>
-            <strong style={{fontSize: '0.85rem', color: '#5b21b6'}}>Adjustment Categories</strong>
-            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Розподіл причин зміни знахідок: COMPENSATING_CONTROL, ISOLATED_ENVIRONMENT, TOOL_INACCURACY, BUSINESS_REQUIREMENT тощо.</p>
+          <div style={{padding: '0.75rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
+            <strong style={{fontSize: '0.85rem', color: '#1e40af'}}>Adjustment Rate (%)</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0', lineHeight: '1.5'}}>Відсоток знахідок CSPM, для яких LLM змінила критичність або позначила їх як False Positive.</p>
           </div>
           <div style={{padding: '0.75rem', background: 'rgba(245, 158, 11, 0.05)', borderLeft: '3px solid #f59e0b'}}>
             <strong style={{fontSize: '0.85rem', color: '#92400e'}}>Ефективність та вартість</strong>
@@ -913,22 +926,35 @@ const SlideMetrics = () => (
         </div>
       </div>
 
-      {/* Right: 3 image placeholders stacked */}
+      {/* Right: 3 actual images stacked */}
       <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
-          <img src="/metric_placeholder_1.png" alt="Metric 1" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 1</span>'; }} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/2_decision_consistency.png')}>
+          <img src="/2_decision_consistency.png" alt="Decision Consistency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
-          <img src="/metric_placeholder_2.png" alt="Metric 2" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 2</span>'; }} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/3_tokens_latency_adjustment-rate.png')}>
+          <img src="/3_tokens_latency_adjustment-rate.png" alt="Tokens vs Latency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem'}}>
-          <img src="/metric_placeholder_3.png" alt="Metric 3" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} onError={(e) => { e.target.style.display='none'; e.target.parentElement.innerHTML='<span style="color:#94a3b8;font-size:0.85rem">📊 Графік 3</span>'; }} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/4_adjustment-rate_fluctuation.png')}>
+          <img src="/4_adjustment-rate_fluctuation.png" alt="Adjustment Rate Fluctuation" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
       </div>
 
     </div>
+
+    {/* Fullscreen Modal Overlay */}
+    <AnimatePresence>
+      {selectedImg && (
+        <motion.div 
+          initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}
+          style={{position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'}} 
+          onClick={() => setSelectedImg(null)}
+        >
+          <img src={selectedImg} style={{maxWidth: '95%', maxHeight: '95%', objectFit: 'contain', background: 'white', padding: '1rem', borderRadius: '8px'}} />
+        </motion.div>
+      )}
+    </AnimatePresence>
   </div>
-);
+)};
 
 const SlideDashboardCharts = ({ chartData }) => (
   <div className="slide-content">
@@ -948,6 +974,7 @@ const SlideDashboardCharts = ({ chartData }) => (
             <Bar yAxisId="left" dataKey="sh_adj" fill="#8b5cf6" name="SecHub Adj Rate" radius={[4, 4, 0, 0]} barSize={20} />
             <Line yAxisId="right" type="monotone" dataKey="prowler_cons" stroke="#b91c1c" strokeWidth={3} name="Prowler Consistency" dot={{r: 6}} connectNulls />
             <Line yAxisId="right" type="monotone" dataKey="sh_cons" stroke="#4c1d95" strokeWidth={3} name="SecHub Consistency" dot={{r: 6, shape: 'square'}} connectNulls />
+            <ReferenceLine yAxisId="right" y={80} stroke="#10b981" strokeDasharray="3 3" label={{ position: 'top', value: '80% Threshold', fill: '#10b981', fontSize: 12, fontWeight: 'bold' }} strokeWidth={2} />
           </ComposedChart>
         </ResponsiveContainer>
       ) : <p>Loading chart data...</p>}
@@ -1298,7 +1325,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('/summary.json')
+    fetch('/summary.json?t=' + new Date().getTime())
       .then(res => res.json())
       .then(summaryJson => {
         setGlobalData(summaryJson || {});
@@ -1315,14 +1342,19 @@ function App() {
         Array.from(modelNames).forEach(model => {
           const prowler = summaryJson['prowler']?.models_summary.find(m => m.model === model) || {};
           const sh = summaryJson['securityhub']?.models_summary.find(m => m.model === model) || {};
+          const pCons = prowler.decision_consistency || 0;
+          const sCons = sh.decision_consistency || 0;
           cData.push({
             name: model,
             prowler_adj: prowler.adjustment_rate || 0,
             sh_adj: sh.adjustment_rate || 0,
-            prowler_cons: prowler.decision_consistency,
-            sh_cons: sh.decision_consistency
+            prowler_cons: pCons,
+            sh_cons: sCons,
+            sort_val: Math.max(pCons, sCons)
           });
         });
+        
+        cData.sort((a, b) => b.sort_val - a.sort_val);
         setChartData(cData);
 
         // Prepare Table

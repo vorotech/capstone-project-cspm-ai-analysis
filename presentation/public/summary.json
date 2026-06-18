@@ -52,13 +52,13 @@
       },
       {
         "model": "gemma-4-31b-it",
-        "adjustment_rate": 16.65,
+        "adjustment_rate": 17.27,
         "decision_consistency": 87.01,
-        "latency": 61.9,
-        "total_tokens": 11696,
+        "latency": 58.08,
+        "total_tokens": 11715,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 58,
-          "SENSITIVE_DATA_EXPOSURE": 9,
+          "COMPENSATING_CONTROL": 72,
+          "SENSITIVE_DATA_EXPOSURE": 11,
           "TOOL_INACCURACY": 1
         }
       },
@@ -165,6 +165,42 @@
           "INCREASED_CONTEXTUAL_RISK": 2,
           "BUSINESS_REQUIREMENT": 2
         }
+      },
+      {
+        "model": "kimi-k2.7-code",
+        "adjustment_rate": 39.66,
+        "decision_consistency": 74.03,
+        "latency": 150.73,
+        "total_tokens": 17045,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 53,
+          "SENSITIVE_DATA_EXPOSURE": 11,
+          "INCREASED_CONTEXTUAL_RISK": 10,
+          "CRITICAL_BUSINESS_FUNCTION": 7,
+          "TOOL_INACCURACY": 5,
+          "THIRD_PARTY_MANAGED": 4,
+          "ACCEPTED_RISK": 4,
+          "BUSINESS_REQUIREMENT": 3,
+          "ISOLATED_ENVIRONMENT": 1
+        }
+      },
+      {
+        "model": "mimo-v2.5-pro",
+        "adjustment_rate": 42.68,
+        "decision_consistency": 57.14,
+        "latency": 35.39,
+        "total_tokens": 12241,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 65,
+          "SENSITIVE_DATA_EXPOSURE": 12,
+          "ISOLATED_ENVIRONMENT": 9,
+          "CRITICAL_BUSINESS_FUNCTION": 7,
+          "TOOL_INACCURACY": 6,
+          "INCREASED_CONTEXTUAL_RISK": 2,
+          "ACCEPTED_RISK": 2,
+          "BUSINESS_REQUIREMENT": 1,
+          "PUBLICLY_EXPOSED_ASSET": 1
+        }
       }
     ]
   },
@@ -220,12 +256,12 @@
         "model": "gemma-4-31b-it",
         "adjustment_rate": 14.89,
         "decision_consistency": 95.53,
-        "latency": 68.46,
-        "total_tokens": 28065,
+        "latency": 64.33,
+        "total_tokens": 28084,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 58,
-          "BUSINESS_REQUIREMENT": 19,
-          "ISOLATED_ENVIRONMENT": 3,
+          "COMPENSATING_CONTROL": 64,
+          "BUSINESS_REQUIREMENT": 21,
+          "ISOLATED_ENVIRONMENT": 4,
           "ACCEPTED_RISK": 1
         }
       },
@@ -334,6 +370,37 @@
           "ACCEPTED_RISK": 2,
           "CRITICAL_BUSINESS_FUNCTION": 2,
           "INCREASED_CONTEXTUAL_RISK": 1
+        }
+      },
+      {
+        "model": "kimi-k2.7-code",
+        "adjustment_rate": 33.94,
+        "decision_consistency": 41.9,
+        "latency": 245.39,
+        "total_tokens": 38900,
+        "adjustment_categories": {
+          "ACCEPTED_RISK": 382,
+          "BUSINESS_REQUIREMENT": 99,
+          "COMPENSATING_CONTROL": 75,
+          "ISOLATED_ENVIRONMENT": 6,
+          "CRITICAL_BUSINESS_FUNCTION": 1
+        }
+      },
+      {
+        "model": "mimo-v2.5-pro",
+        "adjustment_rate": 37.55,
+        "decision_consistency": 73.18,
+        "latency": 36.45,
+        "total_tokens": 28115,
+        "adjustment_categories": {
+          "COMPENSATING_CONTROL": 54,
+          "TOOL_INACCURACY": 34,
+          "ISOLATED_ENVIRONMENT": 31,
+          "INCREASED_CONTEXTUAL_RISK": 17,
+          "SENSITIVE_DATA_EXPOSURE": 17,
+          "ACCEPTED_RISK": 13,
+          "CRITICAL_BUSINESS_FUNCTION": 11,
+          "BUSINESS_REQUIREMENT": 8
         }
       }
     ]

@@ -767,8 +767,8 @@ const SlideAnalysisPhases = () => (
     <h2>12. Етапи аналізу відповіді LLM</h2>
     <div className="funnel-container" style={{marginTop: '1rem'}}>
       <div className="funnel-stage" style={{width: '90%', background: '#e0f2fe', color: '#1e3a8a'}}>
-        <strong>Етап 1: Оцінка якості</strong><br/>
-        <span style={{fontSize: '0.9rem'}}>Перевірка на таймаути, помилки API, виявлення екстремумів (ZERO/ALL_ADJUSTED)</span>
+        <strong>Етап 1: Фільтрація невдалих запусків</strong><br/>
+        <span style={{fontSize: '0.9rem'}}>Перевірка на таймаути, помилки API, некоректний JSON, виявлення екстремумів (ZERO/ALL_ADJUSTED)</span>
       </div>
       <div style={{width: 0, height: 0, borderLeft: '15px solid transparent', borderRight: '15px solid transparent', borderTop: '20px solid #e0f2fe'}}></div>
       
@@ -860,7 +860,7 @@ const SlideQualityCheck = () => {
   const [selectedImg, setSelectedImg] = useState(null);
   return (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
-    <h2>13. Етап 1: Оцінка якості</h2>
+    <h2>13. Етап 1: Фільтрація невдалих запусків</h2>
     <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', flexGrow: 1, paddingBottom: '1rem', alignItems: 'stretch'}}>
       <div className="card" style={{display: 'flex', flexDirection: 'column'}}>
         <h3 style={{display: 'flex', alignItems: 'center', marginBottom: '1rem', color: '#3b82f6'}}>
@@ -1000,9 +1000,9 @@ const catColors = {
 const getCatColor = (cat) => catColors[cat] || catColors.DEFAULT;
 
 const SlideDashboardTable = ({ tableRows }) => (
-  <div className="slide-content">
+  <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>16. Етап 4: Висновки щодо LLM-моделей</h2>
-    <div className="table-container" style={{overflowX: 'auto', maxHeight: '400px', background: 'white', borderRadius: '0', border: '1px solid #e2e8f0'}}>
+    <div className="table-container" style={{flexGrow: 1, overflowY: 'auto', background: 'white', borderRadius: '0', border: '1px solid #e2e8f0', minHeight: 0}}>
       <table style={{width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.85rem'}}>
         <thead style={{position: 'sticky', top: 0, background: '#f8fafc', zIndex: 1}}>
           <tr style={{borderBottom: '2px solid rgba(0,0,0,0.05)'}}>

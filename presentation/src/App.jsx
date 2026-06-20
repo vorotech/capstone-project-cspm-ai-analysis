@@ -297,7 +297,6 @@ const SlideProblem = () => (
         </div>
         <div style={{padding: '1.25rem', background: 'rgba(239, 68, 68, 0.08)', borderLeft: '4px solid #ef4444', borderRadius: '0', marginTop: 'auto'}}>
           <p style={{margin: 0, color: '#b91c1c', fontWeight: '500', lineHeight: '1.6', fontSize: '1rem'}}>
-            <strong>Наслідок: Alert Fatigue (Втома від тривог)</strong><br/>
             Після глибшого ручного аналізу зауваження часто виявляються false positives, оскільки не враховують бізнес-контекст, компенсуючі заходи чи архітектурні рішення.
           </p>
         </div>

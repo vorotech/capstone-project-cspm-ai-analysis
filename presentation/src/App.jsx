@@ -517,7 +517,7 @@ const SlideArchitecture = () => (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>6. Архітектура тестової інфраструктури</h2>
     <div style={{flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', borderRadius: '0', padding: '1rem', border: '1px solid #e2e8f0', overflow: 'hidden'}}>
-      <img src="/aws-multi-tier-architecture.drawio.png" alt="Architecture Diagram" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+      <img src="./aws-multi-tier-architecture.drawio.png" alt="Architecture Diagram" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
     </div>
   </div>
 );
@@ -883,8 +883,8 @@ const SlideQualityCheck = () => {
           </div>
         </div>
       </div>
-      <div style={{background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/1_filter_out_results_below_threshold.png')}>
-        <img src="/1_filter_out_results_below_threshold.png" alt="Оцінка якості" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+      <div style={{background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-in'}} onClick={() => setSelectedImg('./1_filter_out_results_below_threshold.png')}>
+        <img src="./1_filter_out_results_below_threshold.png" alt="Оцінка якості" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
       </div>
     </div>
 
@@ -933,14 +933,14 @@ const SlideMetrics = () => {
 
       {/* Right: 3 actual images stacked */}
       <div style={{display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/2_decision_consistency.png')}>
-          <img src="/2_decision_consistency.png" alt="Decision Consistency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('./2_decision_consistency.png')}>
+          <img src="./2_decision_consistency.png" alt="Decision Consistency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/3_tokens_latency_adjustment-rate.png')}>
-          <img src="/3_tokens_latency_adjustment-rate.png" alt="Tokens vs Latency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('./3_tokens_latency_adjustment-rate.png')}>
+          <img src="./3_tokens_latency_adjustment-rate.png" alt="Tokens vs Latency" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
-        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('/4_adjustment-rate_fluctuation.png')}>
-          <img src="/4_adjustment-rate_fluctuation.png" alt="Adjustment Rate Fluctuation" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
+        <div className="card" style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'white', padding: '0.5rem', cursor: 'zoom-in'}} onClick={() => setSelectedImg('./4_adjustment-rate_fluctuation.png')}>
+          <img src="./4_adjustment-rate_fluctuation.png" alt="Adjustment Rate Fluctuation" style={{maxWidth: '100%', maxHeight: '100%', objectFit: 'contain'}} />
         </div>
       </div>
 
@@ -1133,7 +1133,7 @@ const SlideAppendix = () => (
   <div className="slide-content" style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
     <h2>19. Додаток: Jupyter Notebook</h2>
     <div style={{flexGrow: 1, border: '1px solid #e2e8f0', overflow: 'hidden', background: '#fff', marginTop: '1rem'}}>
-      <iframe src="/results_analysis.html" width="100%" height="100%" style={{border: 'none'}} title="Results Analysis Notebook"></iframe>
+      <iframe src="./results_analysis.html" width="100%" height="100%" style={{border: 'none'}} title="Results Analysis Notebook"></iframe>
     </div>
   </div>
 );
@@ -1313,7 +1313,38 @@ function App() {
   const [chartData, setChartData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slideParam = params.get('slide');
+    if (slideParam) {
+      const idx = parseInt(slideParam, 10);
+      return isNaN(idx) ? 0 : idx;
+    }
+    return 0;
+  });
+
+  useEffect(() => {
+    const url = new URL(window.location);
+    if (currentSlide === 0) {
+      url.searchParams.delete('slide');
+    } else {
+      url.searchParams.set('slide', currentSlide.toString());
+    }
+    window.history.replaceState({}, '', url);
+  }, [currentSlide]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const slideParam = params.get('slide');
+      const idx = slideParam ? parseInt(slideParam, 10) : 0;
+      if (!isNaN(idx) && idx !== currentSlide) {
+        setCurrentSlide(idx);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [currentSlide]);
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -1326,7 +1357,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetch('/summary.json?t=' + new Date().getTime())
+    fetch('./summary.json?t=' + new Date().getTime())
       .then(res => res.json())
       .then(summaryJson => {
         setGlobalData(summaryJson || {});

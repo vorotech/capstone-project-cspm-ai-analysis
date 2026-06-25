@@ -52,13 +52,16 @@
       },
       {
         "model": "gemma-4-31b-it",
-        "adjustment_rate": 17.27,
-        "decision_consistency": 87.01,
-        "latency": 58.08,
-        "total_tokens": 11715,
+        "adjustment_rate": 19.41,
+        "decision_consistency": 85.71,
+        "latency": 49.38,
+        "total_tokens": 11789,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 72,
-          "SENSITIVE_DATA_EXPOSURE": 11,
+          "COMPENSATING_CONTROL": 359,
+          "SENSITIVE_DATA_EXPOSURE": 55,
+          "CRITICAL_BUSINESS_FUNCTION": 4,
+          "ISOLATED_ENVIRONMENT": 3,
+          "INCREASED_CONTEXTUAL_RISK": 2,
           "TOOL_INACCURACY": 1
         }
       },
@@ -125,15 +128,15 @@
       },
       {
         "model": "gpt-4o-mini",
-        "adjustment_rate": 36.72,
-        "decision_consistency": 88.31,
-        "latency": 32.01,
-        "total_tokens": 10346,
+        "adjustment_rate": 36.82,
+        "decision_consistency": 85.71,
+        "latency": 36.36,
+        "total_tokens": 10327,
         "adjustment_categories": {
-          "PUBLICLY_EXPOSED_ASSET": 60,
-          "INCREASED_CONTEXTUAL_RISK": 52,
-          "SENSITIVE_DATA_EXPOSURE": 48,
-          "ACCEPTED_RISK": 16
+          "PUBLICLY_EXPOSED_ASSET": 313,
+          "INCREASED_CONTEXTUAL_RISK": 288,
+          "SENSITIVE_DATA_EXPOSURE": 217,
+          "ACCEPTED_RISK": 76
         }
       },
       {
@@ -255,14 +258,14 @@
       {
         "model": "gemma-4-31b-it",
         "adjustment_rate": 14.89,
-        "decision_consistency": 95.53,
-        "latency": 64.33,
-        "total_tokens": 28084,
+        "decision_consistency": 92.18,
+        "latency": 67.5,
+        "total_tokens": 28073,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 64,
-          "BUSINESS_REQUIREMENT": 21,
-          "ISOLATED_ENVIRONMENT": 4,
-          "ACCEPTED_RISK": 1
+          "COMPENSATING_CONTROL": 365,
+          "BUSINESS_REQUIREMENT": 114,
+          "ISOLATED_ENVIRONMENT": 18,
+          "ACCEPTED_RISK": 3
         }
       },
       {
@@ -331,12 +334,13 @@
       },
       {
         "model": "gpt-4o-mini",
-        "adjustment_rate": 24.74,
-        "decision_consistency": 92.74,
-        "latency": 22.05,
-        "total_tokens": 25044,
+        "adjustment_rate": 25.85,
+        "decision_consistency": 86.03,
+        "latency": 27.73,
+        "total_tokens": 25112,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 139
+          "COMPENSATING_CONTROL": 736,
+          "INCREASED_CONTEXTUAL_RISK": 4
         }
       },
       {

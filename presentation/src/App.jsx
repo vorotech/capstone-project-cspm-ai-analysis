@@ -871,7 +871,7 @@ const SlideQualityCheck = ({ slideIndex }) => {
         <div style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
           <div style={{padding: '0.75rem', background: 'rgba(239, 68, 68, 0.05)', borderLeft: '3px solid #dc2626'}}>
             <strong style={{fontSize: '0.85rem', color: '#991b1b'}}>TIMEOUT</strong>
-            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Перевищено ліміт часу (120с).</p>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Перевищено ліміт часу.</p>
           </div>
           <div style={{padding: '0.75rem', background: 'rgba(220, 38, 38, 0.05)', borderLeft: '3px solid #b91c1c'}}>
             <strong style={{fontSize: '0.85rem', color: '#991b1b'}}>API_ERROR</strong>

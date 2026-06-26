@@ -505,7 +505,7 @@ const SlideConstraints = ({ slideIndex }) => (
           </div>
           <div style={{display: 'flex', flexDirection: 'column', gap: '4px'}}>
             <span style={{fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold'}}>Ітерації</span>
-            <span style={{fontWeight: '600'}}>10</span>
+            <span style={{fontWeight: '600'}}>10-62</span>
           </div>
         </div>
       </div>
@@ -1102,7 +1102,7 @@ const SlideValue = ({ slideIndex }) => (
           <Lightbulb size={20} style={{marginRight: '8px'}}/> Зниження ручного навантаження
         </h3>
         <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.7'}}>
-          Дослідження наочно демонструє можливості та ефективність застосування LLM для автоматизованої переоцінки ризиків з урахуванням архітектурного контексту.
+          Дослідження наочно демонструє можливості та ефективність застосування LLM для автономної переоцінки ризиків з урахуванням архітектурного контексту.
         </p>
         <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(59, 130, 246, 0.05)', borderLeft: '3px solid #3b82f6'}}>
           <p style={{fontSize: '0.9rem', color: '#334155', lineHeight: '1.6', margin: 0}}>

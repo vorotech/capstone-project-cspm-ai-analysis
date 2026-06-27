@@ -62,14 +62,16 @@ def calculate_summary(m_df, f_df):
             latency = mod_m_valid['latency_seconds'].mean()
             total_tokens = mod_m_valid['prompt_tokens'].mean() + mod_m_valid['completion_tokens'].mean()
             
+            mod_f_valid = mod_f[mod_f['run_id'].isin(mod_m_valid['run_id'])]
+            
             if len(mod_m_valid) > 1:
-                cons_df = mod_f.groupby(['finding_id', 'resource_id'])['decision_signature'].nunique()
+                cons_df = mod_f_valid.groupby(['finding_id', 'resource_id'])['decision_signature'].nunique()
                 cons_rate = (cons_df == 1).mean() * 100
             else:
                 cons_rate = None
                 
-            is_fp = mod_f["is_false_positive"].astype(str).str.lower() == "true"
-            adjusted = mod_f[(mod_f["adjusted_severity"] != mod_f["original_severity"]) | is_fp]
+            is_fp = mod_f_valid["is_false_positive"].astype(str).str.lower() == "true"
+            adjusted = mod_f_valid[(mod_f_valid["adjusted_severity"] != mod_f_valid["original_severity"]) | is_fp]
             cat_counts = {}
             if not adjusted.empty:
                 cats = adjusted["adjustment_category"].value_counts()

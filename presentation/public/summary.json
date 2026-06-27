@@ -19,17 +19,17 @@
       {
         "model": "deepseek-v4-flash",
         "adjustment_rate": 33.32,
-        "decision_consistency": 0.0,
+        "decision_consistency": 32.47,
         "latency": 83.15,
         "total_tokens": 15008,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 75,
-          "INCREASED_CONTEXTUAL_RISK": 42,
-          "ACCEPTED_RISK": 27,
-          "TOOL_INACCURACY": 12,
+          "COMPENSATING_CONTROL": 42,
+          "INCREASED_CONTEXTUAL_RISK": 32,
+          "TOOL_INACCURACY": 4,
           "CRITICAL_BUSINESS_FUNCTION": 4,
           "TEST_RESOURCE": 1,
           "BUSINESS_REQUIREMENT": 1,
+          "ACCEPTED_RISK": 1,
           "SENSITIVE_DATA_EXPOSURE": 1
         }
       },
@@ -57,8 +57,8 @@
         "latency": 49.38,
         "total_tokens": 11789,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 359,
-          "SENSITIVE_DATA_EXPOSURE": 55,
+          "COMPENSATING_CONTROL": 351,
+          "SENSITIVE_DATA_EXPOSURE": 54,
           "CRITICAL_BUSINESS_FUNCTION": 4,
           "ISOLATED_ENVIRONMENT": 3,
           "INCREASED_CONTEXTUAL_RISK": 2,
@@ -224,17 +224,17 @@
       {
         "model": "deepseek-v4-flash",
         "adjustment_rate": 41.49,
-        "decision_consistency": 0.0,
+        "decision_consistency": 0.56,
         "latency": 165.74,
         "total_tokens": 38578,
         "adjustment_categories": {
-          "COMPENSATING_CONTROL": 273,
-          "ACCEPTED_RISK": 249,
-          "BUSINESS_REQUIREMENT": 83,
+          "COMPENSATING_CONTROL": 234,
+          "ACCEPTED_RISK": 129,
+          "BUSINESS_REQUIREMENT": 65,
           "TOOL_INACCURACY": 43,
           "ISOLATED_ENVIRONMENT": 8,
           "SENSITIVE_DATA_EXPOSURE": 8,
-          "INCREASED_CONTEXTUAL_RISK": 6,
+          "INCREASED_CONTEXTUAL_RISK": 4,
           "PUBLICLY_EXPOSED_ASSET": 3,
           "CRITICAL_BUSINESS_FUNCTION": 2
         }

@@ -252,7 +252,7 @@ const SlideTitle = () => {
           </h1>
 
           <p style={{fontSize: '1.15rem', color: '#64748b', maxWidth: '560px', margin: '0 auto', lineHeight: '1.6', fontWeight: '400'}}>
-            Інтелектуальна переоцінка ризиків безпеки хмарної інфраструктури на основі архітектурного контексту
+            Дослідження застосування LLM для автономної переоцінки ризиків безпеки в хмарному середовищі з урахуванням архітектурного контексту
           </p>
         </motion.div>
 
@@ -338,8 +338,8 @@ const SlideQuestion = ({ slideIndex }) => (
         
         <div style={{position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <h3 style={{color: '#1e293b', fontSize: '1.8rem', lineHeight: '1.6', fontWeight: '500', margin: 0}}>
-            Чи здатні великі мовні моделі (LLM) ефективно виконувати роль <span style={{color: '#8b5cf6', fontWeight: '700'}}>контекстно-залежного хмарного аудитора</span>, 
-            стабільно аналізуючи результати CSPM-інструментів на основі архітектурних діаграм для відсіювання false positives та <span style={{color: '#8b5cf6', fontWeight: '700'}}>обґрунтованого коригування рівня ризику</span>?
+            Яким чином відрізняється здатність різних архітектур великих мовних моделей (LLM) ефективно виконувати роль <span style={{color: '#8b5cf6', fontWeight: '700'}}>контекстно-залежного хмарного аудитора</span>,
+            забезпечуючи високу стабільність аналізу результатів CSPM-інструментів з урахуванням широкого архітектурного контексту для відсіювання хибних спрацьовувань та <span style={{color: '#8b5cf6', fontWeight: '700'}}>обґрунтованого коригування рівня ризику</span>?
           </h3>
         </div>
       </div>
@@ -666,7 +666,12 @@ const SlideNormalization = ({ slideIndex }) => (
     {
       "cloud_partition": "aws",
       "region": "us-east-1",
-      "data": { ... }
+      "data": { 
+        "metadata": {
+          "arn": "arn:aws:s3:::012-bucket-5154844-red",
+          ...
+        }
+      }
     }
   ],
   "risk_details": "Without access logs, object reads..."
@@ -1272,7 +1277,7 @@ const SlideThankYou = () => {
             Дякую за увагу!
           </h1>
           <p style={{fontSize: '1.15rem', color: '#64748b', maxWidth: '500px', margin: '0 auto', lineHeight: '1.6'}}>
-            Допоможу виправити вашу хмарну безпеку
+            Оптимізуємо хмарну бепеку разом з LLM
           </p>
         </motion.div>
 

@@ -1090,6 +1090,10 @@ const SlideInsights = ({ slideIndex }) => (
             <strong style={{fontSize: '0.85rem', color: '#b91c1c'}}>📉 Коригування (Adjustment Rate)</strong>
             <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Водночас, відсоток коригувань (Adjustment Rate) для Security Hub загалом є нижчим порівняно з Prowler.</p>
           </div>
+          <div style={{padding: '0.75rem', background: 'rgba(14, 165, 233, 0.05)', borderLeft: '3px solid #0ea5e9'}}>
+            <strong style={{fontSize: '0.85rem', color: '#0369a1'}}>🧠 Ефект «Over-reasoning»</strong>
+            <p style={{fontSize: '0.85rem', color: '#475569', margin: '0.25rem 0 0'}}>Комерційні флагмани схильні до надлишкового аналізу, що призводить до непередбачуваної варіативності їхніх відповідей у стандартизованих задачах.</p>
+          </div>
         </div>
       </div>
 
